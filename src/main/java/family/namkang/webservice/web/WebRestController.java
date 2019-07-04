@@ -1,5 +1,7 @@
 package family.namkang.webservice.web;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,8 +21,13 @@ public class WebRestController {
         return "HelloWorld";
     }
 
-    @PostMapping("/posts")
-    public void savePosts(@RequestBody PostsSaveRequestDto dto){
+    @PostMapping("/post")
+    public void savePost(@RequestBody PostsSaveRequestDto dto){
         postsRepository.save(dto.toEntity());
+    }
+
+    @PostMapping("/posts")
+    public void savePosts(@RequestBody List<PostsSaveRequestDto> dtos){
+        postsRepository.saveAll(PostsSaveRequestDto.toEntity(dtos));
     }
 }
