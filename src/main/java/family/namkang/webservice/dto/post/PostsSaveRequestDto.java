@@ -1,9 +1,9 @@
-package family.namkang.webservice.dto.posts;
+package family.namkang.webservice.dto.post;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import family.namkang.webservice.domain.Posts;
+import family.namkang.webservice.domain.post.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,16 +16,16 @@ public class PostsSaveRequestDto {
     private String content;
     private String author;
 
-    public Posts toEntity(){
-        return Posts.builder()
+    public Post toEntity(){
+        return Post.builder()
                 .title(title)
                 .content(content)
                 .author(author)
                 .build();
     }
     
-    public static List<Posts> toEntity(List<PostsSaveRequestDto> dtos) {
-    	List<Posts> posts = new ArrayList<Posts>();
+    public static List<Post> toEntity(List<PostsSaveRequestDto> dtos) {
+    	List<Post> posts = new ArrayList<Post>();
     	for (PostsSaveRequestDto postsSaveRequestDto : dtos) {
     		posts.add( postsSaveRequestDto.toEntity( ));
 		}

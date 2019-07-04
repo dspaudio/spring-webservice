@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import family.namkang.webservice.domain.post.Post;
+import family.namkang.webservice.domain.post.PostsRepository;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class PostsRepositoryTest {
@@ -33,17 +36,17 @@ public class PostsRepositoryTest {
     @Test
     public void 게시글저장_불러오기() {
         //given
-        postsRepository.save(Posts.builder()
+        postsRepository.save(Post.builder()
                 .title("테스트 게시글")
                 .content("테스트 본문")
                 .author("jojoldu@gmail.com")
                 .build());
 
         //when
-        List<Posts> postsList = postsRepository.findAll();
+        List<Post> postsList = postsRepository.findAll();
 
         //then
-        Posts posts = postsList.get(0);
+        Post posts = postsList.get(0);
         assertThat(posts.getTitle(), is("테스트 게시글"));
         assertThat(posts.getContent(), is("테스트 본문"));
     }
@@ -52,17 +55,17 @@ public class PostsRepositoryTest {
     public void BaseTimeEntity_등록 () {
         //given
         LocalDateTime now = LocalDateTime.now();
-        postsRepository.save(Posts.builder()
+        postsRepository.save(Post.builder()
                 .title("테스트 게시글")
                 .content("테스트 본문")
                 .author("jojoldu@gmail.com")
                 .build());
         //when
-        List<Posts> postsList = postsRepository.findAll();
+        List<Post> postsList = postsRepository.findAll();
 
         //then
         LocalDateTime afer = LocalDateTime.now();
-        Posts posts = postsList.get(0);
+        Post posts = postsList.get(0);
         assertTrue(posts.getCreatedDate().isAfter(now));
         assertTrue(posts.getModifiedDate().isAfter(now));
         assertTrue(posts.getCreatedDate().isBefore(afer));
