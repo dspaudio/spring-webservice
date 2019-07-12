@@ -12,15 +12,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PostsSaveRequestDto {
+    private Long boardId;
+    private Long boardCategoryId;
     private String title;
     private String content;
-    private String author;
+    private Long userId;
 
     public Post toEntity(){
         return Post.builder()
-                .title(title)
-                .content(content)
-                .author(author)
+                .boardId(this.boardId)
+                .boardCategoryId(this.boardCategoryId)
+                .title(this.title)
+                .content(this.content)
+                .userId(this.userId)
                 .build();
     }
     

@@ -1,20 +1,20 @@
 package family.namkang.webservice.domain.post;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.stream.Stream;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.DynamicInsert;
 
 import family.namkang.webservice.domain.BaseTimeEntity;
+import family.namkang.webservice.domain.user.User;
 import family.namkang.webservice.dto.post.PostsSaveRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,6 +22,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicInsert  //insert 시 null 인필드 제외
 @Getter
 @Entity
 public class Post extends BaseTimeEntity {
@@ -31,73 +32,61 @@ public class Post extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING) // enum의 key를 DB에 저장하기 위해, 없을 경우 enum의 디폴트값인 숫자가 들어간다.
-    private PostType postType; 
+    private Long boardId;
 
-    @Column(length = 500, nullable = false)
+    private Long groupNo;
+
+    @Column(nullable=false, columnDefinition="Integer default 0")
+    private Integer inGroupDepth;
+
+    @Column(nullable=false, columnDefinition="Integer default 0")
+    private Integer inGroupOrder;
+
+    private Long boardCategoryId;
+
+    @Column(nullable=false, columnDefinition="Boolean default false")
+    private Boolean noticeFlag;
+
+    @Column(nullable=false, columnDefinition="Boolean default false")
+    private Boolean delFlag;
+
+    @Column(length = 300, nullable = false)
     private String title;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(nullable = false)
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
     private String content;
 
-    private String author;
+    @Column(nullable = false)
+    private Long userId;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User createdBy; 
+    
+    
 
     @Builder
-    public Post(String title, String content, String author) {
+    public Post(Long boardId, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, Long boardCategoryId, Boolean noticeFlag, Boolean delFlag, String title, String content, Long userId) {
+    	
+        this.boardId = boardId;
+        this.groupNo = groupNo == null ? boardId:groupNo;
+        this.inGroupDepth = inGroupDepth == null ? 0:inGroupDepth;
+        this.inGroupOrder = inGroupOrder == null ? 0:inGroupOrder;
+        this.boardCategoryId = boardCategoryId;
+        this.noticeFlag = noticeFlag == null ? false:noticeFlag;
+        this.delFlag = delFlag == null ? false:delFlag;
         this.title = title;
         this.content = content;
-        this.author = author;
+        this.userId = userId;
     }
     
     public void update(PostsSaveRequestDto dto) {
+        this.boardCategoryId = dto.getBoardCategoryId();
     	this.title = dto.getTitle();
         this.content = dto.getContent();
-        this.author = dto.getAuthor();
     }
 
     
-    public enum PostType {
-
-        TYPE1("타입1"),
-        TYPE2("타입2"),
-        TYPE3("타입3"),
-        TYPE4("타입4"),
-        TYPE5("타입5"),
-        TYPE6("타입6"),
-        TYPE7("타입7"),
-        TYPE8("타입8");
-
-        @Getter
-        private String value;
-
-        PostType(String value) {
-            this.value = value;
-        }
-    }
-    public enum PostTypeGroup {
-
-    	GROUP1("그룹1", new PostType[] {PostType.TYPE1,PostType.TYPE2,PostType.TYPE3}),
-    	GROUP2("그룹2", new PostType[] {PostType.TYPE4,PostType.TYPE5,PostType.TYPE6}),
-    	GROUP3("그룹3", new PostType[] {PostType.TYPE7,PostType.TYPE8}),
-    	EMPTY("없음", new PostType[] {});
-
-        @Getter
-        private String value;
-        @Getter
-        private PostType[] containedPostType;
-
-        PostTypeGroup(String value, PostType[] containedPostType) {
-            this.value = value;
-            this.containedPostType = containedPostType;
-        }
-        
-        public static PostTypeGroup findGroup(PostType postType) {
-        	Stream<PostTypeGroup> stream = Arrays.stream(PostTypeGroup.values());
-        	stream.filter(group -> hasPostType(group, postType)).findAny().orElse(PostTypeGroup.EMPTY);
-        	return Arrays.stream(PostTypeGroup.values()).filter(group -> hasPostType(group, postType)).findAny().orElse(PostTypeGroup.EMPTY);
-        }
-        private static boolean hasPostType(PostTypeGroup group, PostType type) {
-        	return Arrays.stream(group.getContainedPostType()).anyMatch(contained -> contained==type);
-        }
-    }
 }

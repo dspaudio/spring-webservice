@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import family.namkang.webservice.domain.post.Post;
-import family.namkang.webservice.domain.post.PostsRepository;
+import family.namkang.webservice.domain.post.PostRepository;
 import family.namkang.webservice.dto.post.PostsSaveRequestDto;
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
 public class WebRestController {
-    private PostsRepository postsRepository;
+    private PostRepository postsRepository;
 
     @GetMapping("/hello")
     public String hello() {
