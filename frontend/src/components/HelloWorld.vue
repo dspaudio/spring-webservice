@@ -27,10 +27,10 @@ export default {
   },
   methods: {
     load () {
-      axios.get('/api/hello').then((resp) => {
-        console.log(resp.data)
-        this.msg = resp.data
-      })
+      // axios.get('/api/hello').then((resp) => {
+      //   console.log(resp.data)
+      //   this.msg = resp.data
+      // })
       axios.get('/api/list').then((resp) => {
         this.list = resp.data
       })
