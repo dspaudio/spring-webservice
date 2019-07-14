@@ -68,7 +68,7 @@ public class PostsRepositoryTest {
                 .boardId(1L)
                 .title("테스트 게시글")
                 .content("테스트 본문")
-                .userId( user.getId() )
+                .createdBy(user)
                 .build());
 
         //when
@@ -92,7 +92,7 @@ public class PostsRepositoryTest {
                 .boardId(1L)
                 .title("테스트 게시글")
                 .content("테스트 본문")
-                .userId( user.getId() )
+                .createdBy(user)
                 .build());
         //when
         List<Post> postList = postRepository.findAll();
@@ -115,7 +115,6 @@ public class PostsRepositoryTest {
                 .boardId(1L)
                 .title("테스트 게시글")
                 .content("테스트 본문")
-                .userId(user.getId())
                 .build());
         //when
         List<Post> postList = postRepository.findAll();

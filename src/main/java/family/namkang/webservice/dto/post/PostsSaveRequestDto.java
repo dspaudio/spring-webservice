@@ -16,7 +16,6 @@ public class PostsSaveRequestDto {
     private Long boardCategoryId;
     private String title;
     private String content;
-    private Long userId;
 
     public Post toEntity(){
         return Post.builder()
@@ -24,7 +23,6 @@ public class PostsSaveRequestDto {
                 .boardCategoryId(this.boardCategoryId)
                 .title(this.title)
                 .content(this.content)
-                .userId(this.userId)
                 .build();
     }
     

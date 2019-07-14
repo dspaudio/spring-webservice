@@ -58,9 +58,6 @@ public class Post extends BaseTimeEntity {
     @Lob
     private String content;
 
-    @Column(nullable = false)
-    private Long userId;
-
     @ManyToOne
     @JoinColumn(name = "userId")
     private User createdBy; 
@@ -68,7 +65,7 @@ public class Post extends BaseTimeEntity {
     
 
     @Builder
-    public Post(Long boardId, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, Long boardCategoryId, Boolean noticeFlag, Boolean delFlag, String title, String content, Long userId) {
+    public Post(Long boardId, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, Long boardCategoryId, Boolean noticeFlag, Boolean delFlag, String title, String content, User createdBy) {
     	
         this.boardId = boardId;
         this.groupNo = groupNo == null ? boardId:groupNo;
@@ -79,7 +76,7 @@ public class Post extends BaseTimeEntity {
         this.delFlag = delFlag == null ? false:delFlag;
         this.title = title;
         this.content = content;
-        this.userId = userId;
+        this.createdBy = createdBy;
     }
     
     public void update(PostsSaveRequestDto dto) {

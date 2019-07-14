@@ -13,14 +13,19 @@ import family.namkang.webservice.domain.post.PostRepository;
 import family.namkang.webservice.dto.post.PostsSaveRequestDto;
 import lombok.AllArgsConstructor;
 
-@RestController
+@RestController  //REST API 용으로 만들때만 사용하기. return값이 그대로 response 내용
 @AllArgsConstructor
 public class WebRestController {
     private PostRepository postsRepository;
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "HelloWorld";
+//    @GetMapping("/")
+//    public String index() {
+//        return "This is Index";
+//    }
+
+    @GetMapping("/list")
+    public List<Post> list() {
+        return postsRepository.findAll();
     }
 
     @PostMapping("/savePost")
