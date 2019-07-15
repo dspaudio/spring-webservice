@@ -71,9 +71,11 @@ public class Post extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "createdBy")
+    @Basic(fetch = FetchType.LAZY)
     private User createdBy;
     
     @OneToMany(cascade=CascadeType.ALL, mappedBy="post")
+    @Basic(fetch = FetchType.LAZY)
     private List<File> files; 
     
     
