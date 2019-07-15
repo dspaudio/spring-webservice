@@ -1,7 +1,10 @@
 package family.namkang.webservice.domain.post;
 
 
+import java.util.List;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,11 +12,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.DynamicInsert;
 
 import family.namkang.webservice.domain.BaseTimeEntity;
+import family.namkang.webservice.domain.board.Board;
+import family.namkang.webservice.domain.board.BoardCategory;
+import family.namkang.webservice.domain.file.File;
 import family.namkang.webservice.domain.user.User;
 import family.namkang.webservice.dto.post.PostsSaveRequestDto;
 import lombok.AccessLevel;
@@ -31,8 +39,9 @@ public class Post extends BaseTimeEntity {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
-    private Long boardId;
+    @ManyToOne
+    @JoinColumn(name = "boardId")
+    private Board board;
 
     private Long groupNo;
 
@@ -42,7 +51,9 @@ public class Post extends BaseTimeEntity {
     @Column(nullable=false, columnDefinition="Integer default 0")
     private Integer inGroupOrder;
 
-    private Long boardCategoryId;
+    @ManyToOne
+    @JoinColumn(name = "boardCategoryId")
+    private BoardCategory boardCategory;
 
     @Column(nullable=false, columnDefinition="Boolean default false")
     private Boolean noticeFlag;
@@ -50,7 +61,7 @@ public class Post extends BaseTimeEntity {
     @Column(nullable=false, columnDefinition="Boolean default false")
     private Boolean delFlag;
 
-    @Column(length = 300, nullable = false)
+    @Column(nullable = false, length = 300)
     private String title;
 
     @Column(nullable = false)
@@ -59,28 +70,32 @@ public class Post extends BaseTimeEntity {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User createdBy; 
+    @JoinColumn(name = "createdBy")
+    private User createdBy;
+    
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="post")
+    private List<File> files; 
+    
+    
     
     
 
     @Builder
-    public Post(Long boardId, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, Long boardCategoryId, Boolean noticeFlag, Boolean delFlag, String title, String content, User createdBy) {
-    	
-        this.boardId = boardId;
-        this.groupNo = groupNo == null ? boardId:groupNo;
+    public Post(Board board, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, BoardCategory boardCategory, Boolean noticeFlag, Boolean delFlag, String title, String content, User createdBy, List<File> files) {
+        this.board = board;
+        this.groupNo = groupNo == null ? this.id:groupNo;
         this.inGroupDepth = inGroupDepth == null ? 0:inGroupDepth;
         this.inGroupOrder = inGroupOrder == null ? 0:inGroupOrder;
-        this.boardCategoryId = boardCategoryId;
+        this.boardCategory = boardCategory;
         this.noticeFlag = noticeFlag == null ? false:noticeFlag;
         this.delFlag = delFlag == null ? false:delFlag;
         this.title = title;
         this.content = content;
         this.createdBy = createdBy;
+        this.files = files;
     }
     
     public void update(PostsSaveRequestDto dto) {
-        this.boardCategoryId = dto.getBoardCategoryId();
     	this.title = dto.getTitle();
         this.content = dto.getContent();
     }

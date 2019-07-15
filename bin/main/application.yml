@@ -1,5 +1,21 @@
-
+      
 spring:
-  h2:
-    console:
-      enabled: true
+  profiles:
+    active: local # 기본 환경 선택
+  jpa:
+    hibernate:
+      use-new-id-generator-mappings: false # Hibernate의 id 생성 전략을 따라갈지 결정하는 useNewIdGeneratorMappings 설정. 2.0부터는 true가 기본값. -> auto increment가 잘 안먹히게됨 참조 : https://jojoldu.tistory.com/295
+      
+  # DATA WEB (SpringDataWebProperties)
+  data:
+    web:
+      sort:
+        sort-parameter: sort # Sort parameter name.
+      pageable:
+        default-page-size: 20 # Default page size.
+        max-page-size: 1000 # Maximum page size to be accepted.
+        one-indexed-parameters: false # Whether to expose and assume 1-based page number indexes.
+        page-parameter: page # Page index parameter name.
+        prefix: # General prefix to be prepended to the page number and page size parameters.
+        qualifier-delimiter: _ # Delimiter to be used between the qualifier and the actual page number and size properties.
+        size-parameter: size # Page size parameter name.
