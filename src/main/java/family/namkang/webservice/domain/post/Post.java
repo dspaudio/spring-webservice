@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -23,7 +22,6 @@ import family.namkang.webservice.domain.board.Board;
 import family.namkang.webservice.domain.board.BoardCategory;
 import family.namkang.webservice.domain.file.File;
 import family.namkang.webservice.domain.user.User;
-import family.namkang.webservice.dto.post.PostsSaveRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -64,24 +62,21 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false, length = 300)
     private String title;
 
+    @Lob
     @Column(nullable = false)
     @Basic(fetch = FetchType.LAZY)
-    @Lob
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "createdBy")
     @Basic(fetch = FetchType.LAZY)
     private User createdBy;
-    
+
     @OneToMany(cascade=CascadeType.ALL, mappedBy="post")
     @Basic(fetch = FetchType.LAZY)
-    private List<File> files; 
+    private List<File> files;
     
     
-    
-    
-
     @Builder
     public Post(Board board, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, BoardCategory boardCategory, Boolean noticeFlag, Boolean delFlag, String title, String content, User createdBy, List<File> files) {
         this.board = board;
@@ -96,11 +91,5 @@ public class Post extends BaseTimeEntity {
         this.createdBy = createdBy;
         this.files = files;
     }
-    
-    public void update(PostsSaveRequestDto dto) {
-    	this.title = dto.getTitle();
-        this.content = dto.getContent();
-    }
-
     
 }

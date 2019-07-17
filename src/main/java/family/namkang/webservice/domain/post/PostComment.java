@@ -11,7 +11,6 @@ import org.hibernate.annotations.DynamicInsert;
 
 import family.namkang.webservice.domain.BaseTimeEntity;
 import family.namkang.webservice.domain.user.User;
-import family.namkang.webservice.dto.post.PostsSaveRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

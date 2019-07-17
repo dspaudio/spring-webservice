@@ -20,6 +20,8 @@ public class UserRepositoryTest {
 
     @Autowired
     UserRepository userRepository;
+    
+    private User user;
 
     @After
     public void cleanup() {
@@ -27,18 +29,18 @@ public class UserRepositoryTest {
         이후 테스트 코드에 영향을 끼치지 않기 위해 
         테스트 메소드가 끝날때 마다 respository 전체 비우는 코드
         **/
-    	userRepository.deleteAll();
+    	userRepository.delete(this.user);
     }
 
 	@Test
 	public void User저장_불러오기() {
         //given
-		userRepository.save(User.builder()
+		this.user = userRepository.save(User.builder()
                 .userName("유저일")
                 .build());
 
         //when
-        List<User> userList = userRepository.findAll();
+        List<User> userList = userRepository.findAllByOrderByCreatedDateDesc();
 
         //then
         User User = userList.get(0);

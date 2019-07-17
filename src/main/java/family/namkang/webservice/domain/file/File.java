@@ -1,7 +1,9 @@
 package family.namkang.webservice.domain.file;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -40,9 +42,10 @@ public class File extends BaseTimeEntity {
 
     @Column(nullable = false)
     private Long fileSize;
-    
+
     @ManyToOne
     @JoinColumn(name = "postId")
+    @Basic(fetch = FetchType.LAZY)
     private Post post; 
     
 
