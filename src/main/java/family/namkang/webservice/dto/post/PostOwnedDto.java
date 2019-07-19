@@ -11,34 +11,24 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class PostListDto {
+public class PostOwnedDto {
     private Long id;
     private BoardOwnedDto board;
-    private Long groupNo;
-    private Integer inGroupDepth;
-    private Integer inGroupOrder;
     private BoardCategoryOwnedDto boardCategory;
-    private Boolean noticeFlag;
     private Boolean delFlag;
     private String title;
     private UserOwnedDto createdBy;
-    private Integer filesCount;
     private String createdDate;
     private String modifiedDate;
 
     @Builder
-    public PostListDto(Post entity) {
+    public PostOwnedDto(Post entity) {
         this.id = entity.getId();
         this.board = new BoardOwnedDto(entity.getBoard());
-        this.groupNo = entity.getGroupNo();
-        this.inGroupDepth = entity.getInGroupDepth();
-        this.inGroupOrder = entity.getInGroupOrder();
         this.boardCategory = new BoardCategoryOwnedDto(entity.getBoardCategory());
-        this.noticeFlag = entity.getNoticeFlag();
         this.delFlag = entity.getDelFlag();
         this.title = entity.getTitle();
         this.createdBy = new UserOwnedDto(entity.getCreatedBy());
-        this.filesCount = entity.getFiles().size();
         this.createdDate = DateTimeUtil.toString(entity.getCreatedDate(), Pattern.YYYYMMDDHMS);
         this.modifiedDate = DateTimeUtil.toString(entity.getModifiedDate(), Pattern.YYYYMMDDHMS);
     }

@@ -8,34 +8,34 @@ import java.util.Optional;
 import lombok.Getter;
 
 public class DateTimeUtil {
-	
-	public static String toStringWithPattern(LocalDateTime localDateTime, DateTimePattern pattern){
+    
+    public static String toString(LocalDateTime localDateTime, Pattern pattern){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern.getValue());
         return Optional.ofNullable(localDateTime)
                 .map(formatter::format)
                 .orElse("");
     }
-	
-	public static LocalDateTime toDateTimeWithPattern(String str, DateTimePattern pattern){
+    
+    public static LocalDateTime fromString(String str, Pattern pattern){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern.getValue());
         try {
-        	return LocalDateTime.parse(str, formatter);
+            return LocalDateTime.parse(str, formatter);
         } catch (DateTimeParseException e) {
         }
-    	return null;
+        return null;
         
     }
-	
+    
 
-    public enum DateTimePattern {
+    public enum Pattern {
 
-        YYYYMMDDHMS("yyyy-MM-dd HH:mm:ss"),
-        YYYYMMDD("yyyy-MM-dd");
+        YYYYMMDDHMS("yyyy.MM.dd HH:mm:ss"),
+        YYYYMMDD("yyyy.MM.dd");
 
         @Getter
         private String value;
 
-        DateTimePattern(String value) {
+        Pattern(String value) {
             this.value = value;
         }
     }

@@ -29,13 +29,13 @@ public class UserRepositoryTest {
         이후 테스트 코드에 영향을 끼치지 않기 위해 
         테스트 메소드가 끝날때 마다 respository 전체 비우는 코드
         **/
-    	userRepository.delete(this.user);
+        userRepository.delete(this.user);
     }
 
-	@Test
-	public void User저장_불러오기() {
+    @Test
+    public void User저장_불러오기() {
         //given
-		this.user = userRepository.save(User.builder()
+        this.user = userRepository.save(User.builder()
                 .userName("유저일")
                 .build());
 
@@ -45,6 +45,6 @@ public class UserRepositoryTest {
         //then
         User User = userList.get(0);
         assertThat(User.getUserName(), is("유저일"));
-	}
+    }
 
 }

@@ -27,10 +27,10 @@ public class CommonEnums {
     }
     public enum PostTypeGroup {
 
-    	GROUP1("그룹1", new PostType[] {PostType.TYPE1,PostType.TYPE2,PostType.TYPE3}),
-    	GROUP2("그룹2", new PostType[] {PostType.TYPE4,PostType.TYPE5,PostType.TYPE6}),
-    	GROUP3("그룹3", new PostType[] {PostType.TYPE7,PostType.TYPE8}),
-    	EMPTY("없음", new PostType[] {});
+        GROUP1("그룹1", new PostType[] {PostType.TYPE1,PostType.TYPE2,PostType.TYPE3}),
+        GROUP2("그룹2", new PostType[] {PostType.TYPE4,PostType.TYPE5,PostType.TYPE6}),
+        GROUP3("그룹3", new PostType[] {PostType.TYPE7,PostType.TYPE8}),
+        EMPTY("없음", new PostType[] {});
 
         @Getter
         private String value;
@@ -43,12 +43,12 @@ public class CommonEnums {
         }
         
         public static PostTypeGroup findGroup(PostType postType) {
-        	Stream<PostTypeGroup> stream = Arrays.stream(PostTypeGroup.values());
-        	stream.filter(group -> hasPostType(group, postType)).findAny().orElse(PostTypeGroup.EMPTY);
-        	return Arrays.stream(PostTypeGroup.values()).filter(group -> hasPostType(group, postType)).findAny().orElse(PostTypeGroup.EMPTY);
+            Stream<PostTypeGroup> stream = Arrays.stream(PostTypeGroup.values());
+            stream.filter(group -> hasPostType(group, postType)).findAny().orElse(PostTypeGroup.EMPTY);
+            return Arrays.stream(PostTypeGroup.values()).filter(group -> hasPostType(group, postType)).findAny().orElse(PostTypeGroup.EMPTY);
         }
         private static boolean hasPostType(PostTypeGroup group, PostType type) {
-        	return Arrays.stream(group.getContainedPostType()).anyMatch(contained -> contained==type);
+            return Arrays.stream(group.getContainedPostType()).anyMatch(contained -> contained==type);
         }
     }
 }

@@ -13,18 +13,18 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PostSaveDto {
-	private Long id;
-	private Long boardId;
-	private Long groupNo;
-	private Integer inGroupDepth;
-	private Integer inGroupOrder;
-	private Long boardCategoryId;
-	private Boolean noticeFlag;
-	private Boolean delFlag;
-	private String title;
-	private String content;
-	private Long createdById;
-	private List<File> files;
+    private Long id;
+    private Long boardId;
+    private Long groupNo;
+    private Integer inGroupDepth;
+    private Integer inGroupOrder;
+    private Long boardCategoryId;
+    private Boolean noticeFlag;
+    private Boolean delFlag;
+    private String title;
+    private String content;
+    private Long createdById;
+    private List<File> files;
 
     @Builder
     public PostSaveDto(Long id, Long boardId, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, Long boardCategoryId, Boolean noticeFlag, Boolean delFlag, String title, String content, Long createdById) {
@@ -40,19 +40,19 @@ public class PostSaveDto {
         this.content = content;
         this.createdById = createdById;
     }
-
-    public Post toEntity(){
-        return Post.builder()
-                .boardId(boardId)
-                .groupNo(groupNo)
-                .inGroupDepth(inGroupDepth)
-                .inGroupOrder(inGroupOrder)
-                .boardCategoryId(boardCategoryId)
-                .noticeFlag(noticeFlag)
-                .delFlag(delFlag)
-                .title(title)
-                .content(content)
-                .createdById(createdById)
-                .build();
-    }
+    
+//    public Post toEntity(){
+//        return Post.builder()
+//                .boardId(boardId)
+//                .groupNo(groupNo)
+//                .inGroupDepth(inGroupDepth)
+//                .inGroupOrder(inGroupOrder)
+//                .boardCategoryId(boardCategoryId)
+//                .noticeFlag(noticeFlag)
+//                .delFlag(delFlag)
+//                .title(title)
+//                .content(content)
+//                .createdById(createdById)
+//                .build();
+//    }
 }

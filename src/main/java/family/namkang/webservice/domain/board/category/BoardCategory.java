@@ -1,4 +1,4 @@
-package family.namkang.webservice.domain.board;
+package family.namkang.webservice.domain.board.category;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.DynamicInsert;
 
 import family.namkang.webservice.domain.BaseTimeEntity;
+import family.namkang.webservice.domain.board.Board;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

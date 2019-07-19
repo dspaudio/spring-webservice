@@ -1,4 +1,4 @@
-package family.namkang.webservice.domain.post;
+package family.namkang.webservice.domain.post.comment;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.DynamicInsert;
 
 import family.namkang.webservice.domain.BaseTimeEntity;
+import family.namkang.webservice.domain.post.Post;
 import family.namkang.webservice.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -26,12 +26,20 @@ public class User extends BaseTimeEntity {
     @Column(length = 100, nullable = false)
     private String userName;
 
+    @Column(length = 100, nullable = false)
+    private String password;
+
     @Builder
-    public User(String userName) {
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+    
+    public void updateName(String userName) {
         this.userName = userName;
     }
     
-    public void update(String userName) {
-        this.userName = userName;
+    public void updatePassword(String password) {
+        this.password = password;
     }
 }

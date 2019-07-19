@@ -18,6 +18,7 @@ import javax.persistence.OrderBy;
 import org.hibernate.annotations.DynamicInsert;
 
 import family.namkang.webservice.domain.BaseTimeEntity;
+import family.namkang.webservice.domain.board.category.BoardCategory;
 import family.namkang.webservice.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,11 +34,6 @@ public class Board extends BaseTimeEntity {
     @Id
     @GeneratedValue
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "createdBy")
-    @Basic(fetch = FetchType.LAZY)
-    private User createdBy; 
 
     @Column(length = 100, nullable = false)
     private String boardName;
@@ -59,6 +55,11 @@ public class Board extends BaseTimeEntity {
 
     @Column(nullable=false, columnDefinition="Boolean default false")
     private Boolean delFlag;
+
+    @ManyToOne
+    @JoinColumn(name = "createdBy")
+    @Basic(fetch = FetchType.LAZY)
+    private User createdBy; 
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy="board")
     @OrderBy("orderNo asc")

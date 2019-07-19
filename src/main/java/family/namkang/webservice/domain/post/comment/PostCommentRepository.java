@@ -1,4 +1,4 @@
-package family.namkang.webservice.domain.post;
+package family.namkang.webservice.domain.post.comment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

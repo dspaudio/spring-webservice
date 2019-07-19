@@ -19,7 +19,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import family.namkang.webservice.domain.BaseTimeEntity;
 import family.namkang.webservice.domain.board.Board;
-import family.namkang.webservice.domain.board.BoardCategory;
+import family.namkang.webservice.domain.board.category.BoardCategory;
 import family.namkang.webservice.domain.file.File;
 import family.namkang.webservice.domain.user.User;
 import lombok.AccessLevel;
@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 public class Post extends BaseTimeEntity {
-
+    
     @Id
     @GeneratedValue
     private Long id;
@@ -43,7 +43,8 @@ public class Post extends BaseTimeEntity {
 
     private Long groupNo;
 
-    @Column(nullable=false, columnDefinition="Integer default 0")
+    @org.springframework.lang.NonNull  //java에서의 null불가선언
+    @Column(nullable=false, columnDefinition="Integer default 0")  //db에서의 null불가선언
     private Integer inGroupDepth;
 
     @Column(nullable=false, columnDefinition="Integer default 0")
@@ -68,8 +69,7 @@ public class Post extends BaseTimeEntity {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "createdBy")
-    @Basic(fetch = FetchType.LAZY)
+    @JoinColumn(name = "createdById")
     private User createdBy;
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy="post")
@@ -91,5 +91,7 @@ public class Post extends BaseTimeEntity {
         this.createdBy = createdBy;
         this.files = files;
     }
+    
+    
     
 }
