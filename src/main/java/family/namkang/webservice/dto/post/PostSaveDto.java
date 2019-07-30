@@ -2,8 +2,10 @@ package family.namkang.webservice.dto.post;
 
 import java.util.List;
 
-import family.namkang.webservice.domain.file.File;
+import org.springframework.web.multipart.MultipartFile;
+
 import family.namkang.webservice.domain.post.Post;
+import family.namkang.webservice.dto.file.FileUploadDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +26,11 @@ public class PostSaveDto {
     private String title;
     private String content;
     private Long createdById;
-    private List<File> files;
+    private MultipartFile[] files;
+    private List<String> deleteFileIds;
 
     @Builder
-    public PostSaveDto(Long id, Long boardId, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, Long boardCategoryId, Boolean noticeFlag, Boolean delFlag, String title, String content, Long createdById) {
+    public PostSaveDto(Long id, Long boardId, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, Long boardCategoryId, Boolean noticeFlag, Boolean delFlag, String title, String content, Long createdById, List<String> deleteFileIds) {
         this.id = id;
         this.boardId = boardId;
         this.groupNo = groupNo;
@@ -39,20 +42,25 @@ public class PostSaveDto {
         this.title = title;
         this.content = content;
         this.createdById = createdById;
+        this.deleteFileIds = deleteFileIds;
     }
     
-//    public Post toEntity(){
-//        return Post.builder()
-//                .boardId(boardId)
-//                .groupNo(groupNo)
-//                .inGroupDepth(inGroupDepth)
-//                .inGroupOrder(inGroupOrder)
-//                .boardCategoryId(boardCategoryId)
-//                .noticeFlag(noticeFlag)
-//                .delFlag(delFlag)
-//                .title(title)
-//                .content(content)
-//                .createdById(createdById)
-//                .build();
-//    }
+    public void setMultiFiles(MultipartFile[] files) {
+    	this.files = files;
+    }
+    
+    public Post toEntity(){
+        return Post.builder()
+                .boardId(boardId)
+                .groupNo(groupNo)
+                .inGroupDepth(inGroupDepth)
+                .inGroupOrder(inGroupOrder)
+                .boardCategoryId(boardCategoryId)
+                .noticeFlag(noticeFlag)
+                .delFlag(delFlag)
+                .title(title)
+                .content(content)
+                .createdById(createdById)
+                .build();
+    }
 }

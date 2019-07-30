@@ -1,6 +1,8 @@
 package family.namkang.webservice.dto.post;
 
 
+import java.util.Optional;
+
 import family.namkang.webservice.common.util.DateTimeUtil;
 import family.namkang.webservice.common.util.DateTimeUtil.Pattern;
 import family.namkang.webservice.domain.post.Post;
@@ -33,7 +35,7 @@ public class PostListDto {
         this.groupNo = entity.getGroupNo();
         this.inGroupDepth = entity.getInGroupDepth();
         this.inGroupOrder = entity.getInGroupOrder();
-        this.boardCategory = new BoardCategoryOwnedDto(entity.getBoardCategory());
+        this.boardCategory = Optional.ofNullable(entity.getBoardCategory()).map(BoardCategoryOwnedDto::new).orElse(null);
         this.noticeFlag = entity.getNoticeFlag();
         this.delFlag = entity.getDelFlag();
         this.title = entity.getTitle();

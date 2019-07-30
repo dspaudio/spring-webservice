@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.util.StringUtils;
 
 import family.namkang.webservice.domain.BaseTimeEntity;
 import lombok.AccessLevel;
@@ -32,7 +33,7 @@ public class User extends BaseTimeEntity {
     @Builder
     public User(String userName, String password) {
         this.userName = userName;
-        this.password = password;
+        this.password = StringUtils.hasText(password) ? password:"1234";
     }
     
     public void updateName(String userName) {

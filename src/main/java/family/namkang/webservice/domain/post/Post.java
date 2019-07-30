@@ -2,6 +2,7 @@ package family.namkang.webservice.domain.post;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -14,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicInsert;
 
@@ -22,6 +25,7 @@ import family.namkang.webservice.domain.board.Board;
 import family.namkang.webservice.domain.board.category.BoardCategory;
 import family.namkang.webservice.domain.file.File;
 import family.namkang.webservice.domain.user.User;
+import family.namkang.webservice.dto.post.PostSaveDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,8 +41,9 @@ public class Post extends BaseTimeEntity {
     @GeneratedValue
     private Long id;
 
+    private Long boardId;
     @ManyToOne
-    @JoinColumn(name = "boardId")
+    @JoinColumn(name = "boardId", insertable = false, updatable = false)
     private Board board;
 
     private Long groupNo;
@@ -50,8 +55,9 @@ public class Post extends BaseTimeEntity {
     @Column(nullable=false, columnDefinition="Integer default 0")
     private Integer inGroupOrder;
 
+    private Long boardCategoryId;
     @ManyToOne
-    @JoinColumn(name = "boardCategoryId")
+    @JoinColumn(name = "boardCategoryId", insertable = false, updatable = false)
     private BoardCategory boardCategory;
 
     @Column(nullable=false, columnDefinition="Boolean default false")
@@ -68,8 +74,9 @@ public class Post extends BaseTimeEntity {
     @Basic(fetch = FetchType.LAZY)
     private String content;
 
+    private Long createdById;
     @ManyToOne
-    @JoinColumn(name = "createdById")
+    @JoinColumn(name = "createdById", insertable = false, updatable = false)
     private User createdBy;
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy="post")
@@ -78,20 +85,36 @@ public class Post extends BaseTimeEntity {
     
     
     @Builder
-    public Post(Board board, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, BoardCategory boardCategory, Boolean noticeFlag, Boolean delFlag, String title, String content, User createdBy, List<File> files) {
-        this.board = board;
-        this.groupNo = groupNo == null ? this.id:groupNo;
+    public Post(Long boardId, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, Long boardCategoryId, Boolean noticeFlag, Boolean delFlag, String title, String content, Long createdById, List<File> files) {
+        this.boardId = boardId;
+        this.groupNo = groupNo;
         this.inGroupDepth = inGroupDepth == null ? 0:inGroupDepth;
         this.inGroupOrder = inGroupOrder == null ? 0:inGroupOrder;
-        this.boardCategory = boardCategory;
+        this.boardCategoryId = boardCategoryId;
         this.noticeFlag = noticeFlag == null ? false:noticeFlag;
         this.delFlag = delFlag == null ? false:delFlag;
         this.title = title;
         this.content = content;
-        this.createdBy = createdBy;
+        this.createdById = createdById;
         this.files = files;
+        
     }
     
+    public boolean setDefaultGroupNo() {
+    	if (this.groupNo ==null && this.id !=null) {
+    		this.groupNo=this.id;
+    		return true;
+    	}
+    	return false;
+    }
     
+    public void update(PostSaveDto dto) {
+        this.boardCategoryId = dto.getBoardCategoryId();
+        this.noticeFlag = dto.getNoticeFlag();
+        this.delFlag = dto.getDelFlag();
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+        //this.files = dto.getFiles();
+    } 
     
 }

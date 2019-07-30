@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 public class FileListDto {
-    private Long id;
+    private String fileId;
     private String fileName;
     private String fileUrl;
     private String filePath;
@@ -20,7 +20,7 @@ public class FileListDto {
 
     @Builder
     public FileListDto(File entity) {
-        this.id = entity.getId();
+        this.fileId = entity.getFileId().toString();
         this.fileName = entity.getFileName();
         this.fileUrl = entity.getFileUrl();
         this.filePath = entity.getFilePath();

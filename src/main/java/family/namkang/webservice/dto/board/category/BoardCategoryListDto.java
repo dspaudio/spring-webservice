@@ -1,13 +1,12 @@
 package family.namkang.webservice.dto.board.category;
 
-import family.namkang.webservice.domain.BaseTimeEntity;
 import family.namkang.webservice.domain.board.category.BoardCategory;
 import family.namkang.webservice.dto.board.BoardOwnedDto;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class BoardCategoryListDto extends BaseTimeEntity {
+public class BoardCategoryListDto {
 
     private Long id;
     private BoardOwnedDto board;

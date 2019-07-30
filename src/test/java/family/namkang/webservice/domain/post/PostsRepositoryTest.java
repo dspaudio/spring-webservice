@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import family.namkang.webservice.domain.board.Board;
 import family.namkang.webservice.domain.board.BoardRepository;
+import family.namkang.webservice.domain.board.category.BoardCategory;
 import family.namkang.webservice.domain.board.category.BoardCategoryRepository;
 import family.namkang.webservice.domain.file.File;
 import family.namkang.webservice.domain.file.FileRepository;
@@ -45,6 +46,7 @@ public class PostsRepositoryTest {
     
     private User user;
     private Board board;
+    private BoardCategory boardCategory;
     private Post savedPost;
     private File savedFile;
 
@@ -65,6 +67,7 @@ public class PostsRepositoryTest {
         **/
         this.user = userRepository.findAll().get(0);
         this.board = boardRepository.findAll().get(0);
+        this.boardCategory = boardCategoryRepository.findAll().get(0);
     }
     @After
     public void cleanup() {
@@ -80,11 +83,11 @@ public class PostsRepositoryTest {
     public void 게시글저장_불러오기() {
         //given
         this.savedPost = postRepository.save(Post.builder()
-                .board(board)
+                .boardId(board.getId())
                 .title("테스트 게시글")
                 .content("테스트 본문")
-                .createdBy(user)
-                .boardCategory(boardCategoryRepository.findAll().get(0))
+                .createdById(user.getId())
+                .boardCategoryId(boardCategory.getId())
                 .build());
         this.savedFile = fileRepository.save(File.builder() 
                 .fileName("파일파일.jpg")
@@ -107,12 +110,7 @@ System.out.println(savedPost);
         
         assertThat(post.getTitle(), is("테스트 게시글"));
         assertThat(post.getContent(), is("테스트 본문"));
-        assertThat(post.getCreatedBy().getId(), is(user.getId()));
-        assertThat(post.getCreatedBy().getUserName(), is(user.getUserName()));
-        assertThat(post.getBoard().getBoardName(), is(board.getBoardName()));
-        
-        List<Post> posts = postRepository.findAll();
-        File Tfile = posts.get(0).getFiles().get(0);
+        assertThat(post.getCreatedById(), is(user.getId()));
         
         
         assertThat(post.getFiles().get(0).getFileName(),  is(savedFile.getFileName()));

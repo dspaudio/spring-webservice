@@ -28,8 +28,9 @@ public class BoardCategory extends BaseTimeEntity {
     @GeneratedValue
     private Long id;
 
+    private Long boardId;
     @ManyToOne
-    @JoinColumn(name = "boardId")
+    @JoinColumn(name = "boardId", insertable = false, updatable = false)
     @Basic(fetch = FetchType.LAZY)
     private Board board;
     

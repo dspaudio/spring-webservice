@@ -1,5 +1,7 @@
 package family.namkang.webservice.domain.file;
 
+import java.util.UUID;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import family.namkang.webservice.domain.BaseTimeEntity;
 import family.namkang.webservice.domain.post.Post;
@@ -23,10 +27,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 public class File extends BaseTimeEntity {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+	
+	@Id
+	@GeneratedValue
+	@Type(type="uuid-char")
+	private UUID fileId;
 
     @Column(nullable = false, length = 300)
     private String fileName;
@@ -43,8 +48,9 @@ public class File extends BaseTimeEntity {
     @Column(nullable = false)
     private Long fileSize;
 
+    private Long postId;
     @ManyToOne
-    @JoinColumn(name = "postId")
+    @JoinColumn(name = "postId", insertable = false, updatable = false)
     @Basic(fetch = FetchType.LAZY)
     private Post post; 
     

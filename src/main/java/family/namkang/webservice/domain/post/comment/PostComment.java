@@ -27,22 +27,24 @@ public class PostComment extends BaseTimeEntity {
     @GeneratedValue
     private Long id;
 
+    private Long postId;
     @ManyToOne
-    @JoinColumn(name = "postId")
+    @JoinColumn(name = "postId", insertable = false, updatable = false)
     private Post post;
 
     @Column(nullable = false, length = 4000)
     private String content;
 
+    private Long createdById;
     @ManyToOne
-    @JoinColumn(name = "createdBy")
+    @JoinColumn(name = "createdById", insertable = false, updatable = false)
     private User createdBy; 
 
     @Builder
-    public PostComment(Post post, String content, User createdBy) {
-        this.post = post;
+    public PostComment(Long postId, String content, Long createdById) {
+        this.postId = postId;
         this.content = content;
-        this.createdBy = createdBy;
+        this.createdById = createdById;
     }
     
     public void update(String content) {

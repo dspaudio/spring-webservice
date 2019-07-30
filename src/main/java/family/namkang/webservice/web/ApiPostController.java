@@ -1,15 +1,19 @@
 package family.namkang.webservice.web;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import family.namkang.webservice.domain.post.Post;
 import family.namkang.webservice.dto.post.PostDetailDto;
 import family.namkang.webservice.dto.post.PostListDto;
+import family.namkang.webservice.dto.post.PostSaveDto;
 import family.namkang.webservice.service.post.PostService;
 import lombok.AllArgsConstructor;
 
@@ -34,10 +38,13 @@ public class ApiPostController {
         
     }
 
-//    @PostMapping("/save")
-//    public void save(@RequestBody PostsSaveRequestDto dto, MultipartFile[] files){
-//        postRepository.save(dto.toEntity());
-//    }
+    @PostMapping("/save")
+    public void save(@RequestBody PostSaveDto dto, MultipartFile[] files){
+    	
+    	Post saved = postsService.save(dto);
+    	
+    	
+    }
 
 //    @PostMapping("/saveAll")
 //    public void saveAll(@RequestBody List<PostsSaveRequestDto> dtos){

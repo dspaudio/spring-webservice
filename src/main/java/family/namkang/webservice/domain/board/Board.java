@@ -56,8 +56,9 @@ public class Board extends BaseTimeEntity {
     @Column(nullable=false, columnDefinition="Boolean default false")
     private Boolean delFlag;
 
+    private Long createdById;
     @ManyToOne
-    @JoinColumn(name = "createdBy")
+    @JoinColumn(name = "createdById", insertable = false, updatable = false)
     @Basic(fetch = FetchType.LAZY)
     private User createdBy; 
 

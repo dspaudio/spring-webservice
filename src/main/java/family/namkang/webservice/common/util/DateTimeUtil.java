@@ -8,6 +8,17 @@ import java.util.Optional;
 import lombok.Getter;
 
 public class DateTimeUtil {
+	
+	public static String getCurrentyyyy() {
+		return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy"));
+	}
+	public static String getCurrentMM() {
+		return LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM"));
+	}
+	public static String getCurrentdd() {
+		return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd"));
+	}
+	
     
     public static String toString(LocalDateTime localDateTime, Pattern pattern){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern.getValue());
