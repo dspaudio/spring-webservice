@@ -1,13 +1,21 @@
 <template>
   <div class="hello">
     <h1>Hello {{ msg }}</h1>
-    <ul v-if="list.length > 0" v-bind:key="key" v-for="(item, key) in list">
+    <ul v-bind:key="key" v-for="(item, key) in pageable.content " >
       <li>
-        <div>{{ key +" : "+ item.name }}</div>
-        <div>{{ key +" : "+ item.age }}</div>
-        <div>{{ key +" : "+ item.sex }}</div>
+        <span>{{ item.id }}</span> |
+        <span>{{ item.boardCategory.boardCategoryName }}</span> |
+        <span>{{ item.title }}</span> |
+        <span>{{ item.filesCount }}</span> |
+        <span>{{ item.createdBy.userName }}</span> |
+        <span>{{ item.createdDate }}</span> |
+        <a>상세보기</a> |
+        <a>삭제하기</a>
       </li>
     </ul>
+    <span :class="{ off : pageable.first }"> <a>-toFirst-</a> <a>prev</a> </span>
+    {{ pageable.number +1 }} / {{ pageable.totalPages }}
+    <span :class="{ off : pageable.last }"><a>next</a> <a>-toLast-</a> </span>
   </div>
 </template>
 
@@ -18,8 +26,8 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      list: []
+      msg: 'Welcome to Your Vue.js sssApp',
+      pageable: null
     }
   },
   mounted () {
@@ -27,12 +35,8 @@ export default {
   },
   methods: {
     load () {
-      // axios.get('/api/hello').then((resp) => {
-      //   console.log(resp.data)
-      //   this.msg = resp.data
-      // })
-      axios.get('/api/list').then((resp) => {
-        this.list = resp.data
+      axios.get('/api/post/list').then((resp) => {
+        this.pageable = resp.data
       })
     }
   }
@@ -52,7 +56,7 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
-  color: #42b983;
+span.off a {
+  color: #bbbbbb;
 }
 </style>
