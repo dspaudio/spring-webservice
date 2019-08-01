@@ -109,11 +109,11 @@ public class Post extends BaseTimeEntity {
     }
     
     public void update(PostSaveDto dto) {
-        this.boardCategoryId = dto.getBoardCategoryId();
-        this.noticeFlag = dto.getNoticeFlag();
-        this.delFlag = dto.getDelFlag();
-        this.title = dto.getTitle();
-        this.content = dto.getContent();
+        Optional.ofNullable(dto.getBoardCategoryId()).ifPresent(c->{this.boardCategoryId = c;});
+        Optional.ofNullable(dto.getNoticeFlag()).ifPresent(n->{this.noticeFlag = n;});
+        Optional.ofNullable(dto.getDelFlag()).ifPresent(d->{this.delFlag = d;});
+        Optional.ofNullable(dto.getTitle()).ifPresent(t->{this.title = t;});
+        Optional.ofNullable(dto.getContent()).ifPresent(c->{this.content = c;});
         //this.files = dto.getFiles();
     } 
     

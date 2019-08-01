@@ -57,22 +57,21 @@ public class PostService {
             // groupNo이 설정되지 않았을 경우 id값으로 설정
             if ( post.setDefaultGroupNo() ) post = postRepository.save(post);
             
-        	// 업로드 파일 저장처리 필요
-            try {
-				fileRepository.saveAll(FileUtil.getUploadedFilesPost(files, post.getId()));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
             
     	} else {
         	post = postRepository.findById(dto.getId()).orElseThrow(EntityNotFoundException::new);
         	post.update(dto);
         	// 업로드 파일 저장처리 필요
         	post = postRepository.save(post);
-            
     	}
-    	
+
+    	// 업로드 파일 저장처리 필요
+        try {
+			fileRepository.saveAll(FileUtil.getUploadedFilesPost(files, post.getId()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		}
+        
     	return post;
     }
     
