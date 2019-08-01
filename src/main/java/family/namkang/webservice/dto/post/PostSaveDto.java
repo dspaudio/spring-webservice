@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import family.namkang.webservice.domain.post.Post;
-import family.namkang.webservice.dto.file.FileUploadDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

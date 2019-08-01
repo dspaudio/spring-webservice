@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 public class FileOwnedDto {
-    private String fileId;
+    private String id;
     private String fileName;
     private String fileUrl;
     private String filePath;
@@ -19,7 +19,7 @@ public class FileOwnedDto {
 
     @Builder
     public FileOwnedDto(File entity) {
-        this.fileId = entity.getFileId().toString();
+        this.id = entity.getId().toString();
         this.fileName = entity.getFileName();
         this.fileUrl = entity.getFileUrl();
         this.filePath = entity.getFilePath();

@@ -39,9 +39,9 @@ public class ApiPostController {
     }
 
     @PostMapping("/save")
-    public void save(@RequestBody PostSaveDto dto, MultipartFile[] files){
+    public void save(PostSaveDto dto, MultipartFile[] files){
     	
-    	Post saved = postsService.save(dto);
+    	Post saved = postsService.save(dto, files);
     	
     	
     }

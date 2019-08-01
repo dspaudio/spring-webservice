@@ -9,11 +9,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface FileRepository extends JpaRepository<File, Long> {
-	public boolean existsByFileId(String fileId);
+	public boolean existsById(String fileId);
 	
 	@Transactional
     @Modifying
-    @Query("delete from File f where f.fileId in :fileIds")
-    public void deleteAllByFileIdInQuery(@Param("fileIds") List<String> fileIds);
+    @Query("delete from File f where f.id in :fileIds")
+    public void deleteAllByIdInQuery(@Param("fileIds") List<String> fileIds);
 
 }
