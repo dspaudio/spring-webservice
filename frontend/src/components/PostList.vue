@@ -13,7 +13,7 @@
       </li>
     </ul>
     <span :class="{ off : pageable.first }"> <a>-toFirst-</a> <a>prev</a> </span>
-    {{ pageable.number +1 }} / {{ pageable.totalPages }}
+    {{ pageable.number +1 }} //// {{ pageable.totalPages }}
     <span :class="{ off : pageable.last }"><a>next</a> <a>-toLast-</a> </span>
   </div>
 </template>
