@@ -1,5 +1,5 @@
 <template>
-  <div id=listPageable class="hello">
+  <div id="listPageable" class="hello">
     <ul>
       <li v-bind:key="key" v-for="(item, key) in pageable.content ">
         <span>{{ item.id }}</span> |
@@ -53,7 +53,6 @@ ul {
   padding: 0;
 }
 li {
-  display: inline-block;
   margin: 0 10px;
 }
 span.off a {
