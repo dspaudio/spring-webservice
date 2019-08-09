@@ -4,7 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
+import java.io.IOException;
 import java.util.Optional;
 
 import org.junit.After;
@@ -22,10 +22,10 @@ import family.namkang.webservice.domain.board.Board;
 import family.namkang.webservice.domain.board.BoardRepository;
 import family.namkang.webservice.domain.board.category.BoardCategory;
 import family.namkang.webservice.domain.board.category.BoardCategoryRepository;
-import family.namkang.webservice.domain.file.File;
-import family.namkang.webservice.domain.file.FileRepository;
 import family.namkang.webservice.domain.post.Post;
 import family.namkang.webservice.domain.post.PostRepository;
+import family.namkang.webservice.domain.post.file.PostFileRepository;
+import family.namkang.webservice.domain.post.file.PostFile;
 import family.namkang.webservice.domain.user.User;
 import family.namkang.webservice.domain.user.UserRepository;
 
@@ -42,13 +42,13 @@ public class PostsRepositoryTest {
     @Autowired
     BoardCategoryRepository boardCategoryRepository;
     @Autowired
-    FileRepository fileRepository;
+    PostFileRepository fileRepository;
     
     private User user;
     private Board board;
     private BoardCategory boardCategory;
     private Post savedPost;
-    private File savedFile;
+    private PostFile savedFile;
 
     @BeforeClass
     public static void setupForClass(){
@@ -82,21 +82,26 @@ public class PostsRepositoryTest {
     @Transactional    // LAZY로 불러오는 데이터 취득 위해 영속성 유지되도록 설정.
     public void 게시글저장_불러오기() {
         //given
-        this.savedPost = postRepository.save(Post.builder()
-                .boardId(board.getId())
-                .title("테스트 게시글")
-                .content("테스트 본문")
-                .createdById(user.getId())
-                .boardCategoryId(boardCategory.getId())
-                .build());
-//        this.savedFile = fileRepository.save(File.builder() 
-//                .fileName("파일파일.jpg")
-//                .fileUrl("/2019/07/15/파일파일.jpg") 
-//                .filePath("\\2019\\07\\15\\파일파일.jpg")
-//                .mimeType("image/jpeg") 
-//                .fileSize(100L) 
-//                .postId(savedPost.getId()) 
-//                .build());
+        try {
+			this.savedPost = postRepository.save(Post.builder()
+			        .boardId(board.getId())
+			        .title("테스트 게시글")
+			        .content("테스트 본문")
+			        .createdById(user.getId())
+			        .boardCategoryId(boardCategory.getId())
+			        .build());
+//	        this.savedFile = fileRepository.save(File.builder() 
+//          .fileName("파일파일.jpg")
+//          .fileUrl("/2019/07/15/파일파일.jpg") 
+//          .filePath("\\2019\\07\\15\\파일파일.jpg")
+//          .mimeType("image/jpeg") 
+//          .fileSize(100L) 
+//          .postId(savedPost.getId()) 
+//          .build());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
          
 System.out.println(savedPost);
 

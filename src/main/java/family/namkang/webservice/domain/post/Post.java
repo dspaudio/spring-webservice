@@ -1,8 +1,14 @@
 package family.namkang.webservice.domain.post;
 
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -12,18 +18,22 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Transient;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.web.multipart.MultipartFile;
 
+import family.namkang.webservice.common.util.FileUtil;
 import family.namkang.webservice.domain.BaseTimeEntity;
 import family.namkang.webservice.domain.board.Board;
 import family.namkang.webservice.domain.board.category.BoardCategory;
-import family.namkang.webservice.domain.file.File;
+import family.namkang.webservice.domain.post.comment.PostComment;
+import family.namkang.webservice.domain.post.file.PostFile;
 import family.namkang.webservice.domain.user.User;
 import family.namkang.webservice.dto.post.PostSaveDto;
 import lombok.AccessLevel;
@@ -45,15 +55,6 @@ public class Post extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "boardId", insertable = false, updatable = false)
     private Board board;
-
-    private Long groupNo;
-
-    @org.springframework.lang.NonNull  //java에서의 null불가선언
-    @Column(nullable=false, columnDefinition="Integer default 0")  //db에서의 null불가선언
-    private Integer inGroupDepth;
-
-    @Column(nullable=false, columnDefinition="Integer default 0")
-    private Integer inGroupOrder;
 
     private Long boardCategoryId;
     @ManyToOne
@@ -79,42 +80,68 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "createdById", insertable = false, updatable = false)
     private User createdBy;
 
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="post")
+    @OneToMany(mappedBy="postId", cascade=CascadeType.ALL, orphanRemoval = true)
     @Basic(fetch = FetchType.LAZY)
-    private List<File> files;
+    private List<PostFile> postFiles;
+
+    @OneToMany(mappedBy="postId", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("createdDate desc")
+    @Basic(fetch = FetchType.LAZY)
+    private List<PostComment> postComment;
     
     
     @Builder
-    public Post(Long boardId, Long groupNo, Integer inGroupDepth, Integer inGroupOrder, Long boardCategoryId, Boolean noticeFlag, Boolean delFlag, String title, String content, Long createdById, List<File> files) {
+    public Post(Long boardId, Long boardCategoryId, Boolean noticeFlag, Boolean delFlag, String title, String content, Long createdById, MultipartFile[] files) throws IOException {
         this.boardId = boardId;
-        this.groupNo = groupNo;
-        this.inGroupDepth = inGroupDepth == null ? 0:inGroupDepth;
-        this.inGroupOrder = inGroupOrder == null ? 0:inGroupOrder;
         this.boardCategoryId = boardCategoryId;
         this.noticeFlag = noticeFlag == null ? false:noticeFlag;
         this.delFlag = delFlag == null ? false:delFlag;
         this.title = title;
         this.content = content;
         this.createdById = createdById;
-        this.files = files;
-        
+        this.addPostFiles(files);
     }
     
-    public boolean setDefaultGroupNo() {
-    	if (this.groupNo ==null && this.id !=null) {
-    		this.groupNo=this.id;
-    		return true;
-    	}
+    public boolean deletePostFileById (String fileId) {
+    	if (fileId==null || fileId.isEmpty()) return false;
+    	if (this.postFiles==null || this.postFiles.size()==0) return false; 
+    	
+    	for (PostFile postFile : postFiles) {
+    		if ( fileId.equals(postFile.getId().toString()) ) {
+    			postFiles.remove(postFile);
+    			return true;
+    		} 
+		}
     	return false;
     }
+
+    public void deletePostFilesById (List<String> delPostFileIds) {
+    	if (delPostFileIds==null || delPostFileIds.size()==0) return;
+    	if (this.postFiles==null || this.postFiles.size()==0) return;
+    	
+    	for (String delPostFileId : delPostFileIds) {
+    		deletePostFileById(delPostFileId);
+		}
+    }
     
-    public void update(PostSaveDto dto) {
+    public void addPostFiles (MultipartFile[] files) throws IOException {
+    	if (files==null || files.length==0) return;
+    	
+    	this.postFiles = Optional.ofNullable(this.postFiles).orElse(new ArrayList<PostFile>());
+    	for (MultipartFile multipartFile : files) {
+    		this.postFiles.add( new PostFile(multipartFile, this.id) );
+		}
+    }
+    
+    public void update(PostSaveDto dto) throws IOException {
         Optional.ofNullable(dto.getBoardCategoryId()).ifPresent(c->{this.boardCategoryId = c;});
         Optional.ofNullable(dto.getNoticeFlag()).ifPresent(n->{this.noticeFlag = n;});
         Optional.ofNullable(dto.getDelFlag()).ifPresent(d->{this.delFlag = d;});
         Optional.ofNullable(dto.getTitle()).ifPresent(t->{this.title = t;});
         Optional.ofNullable(dto.getContent()).ifPresent(c->{this.content = c;});
-        //this.files = dto.getFiles();
+        
+        deletePostFilesById(dto.getDeleteFileIds());
+        addPostFiles(dto.getFiles());
     } 
     
 }

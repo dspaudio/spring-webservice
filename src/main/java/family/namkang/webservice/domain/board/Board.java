@@ -2,6 +2,7 @@ package family.namkang.webservice.domain.board;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -42,9 +43,6 @@ public class Board extends BaseTimeEntity {
     private Boolean categoryUseFlag;
 
     @Column(nullable=false, columnDefinition="Boolean default false")
-    private Boolean hierarchyUseFlag;
-
-    @Column(nullable=false, columnDefinition="Boolean default false")
     private Boolean commentUseFlag;
 
     @Column(nullable=false, columnDefinition="Boolean default false")
@@ -62,20 +60,20 @@ public class Board extends BaseTimeEntity {
     @Basic(fetch = FetchType.LAZY)
     private User createdBy; 
 
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="board")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="boardId")
     @OrderBy("orderNo asc")
     @Basic(fetch = FetchType.LAZY)
-    private List<BoardCategory> boardCategories = new ArrayList<>();
+    private Set<BoardCategory> boardCategories;
 
     @Builder
-    public Board(String boardName, Boolean categoryUseFlag, Boolean hierarchyUseFlag, Boolean commentUseFlag, Boolean noticeUseFlag, Boolean fileUseFlag, Boolean delFlag, User createdBy) {
+    public Board(String boardName, Boolean categoryUseFlag, Boolean commentUseFlag, Boolean noticeUseFlag, Boolean fileUseFlag, Boolean delFlag, User createdBy, Set<BoardCategory> boardCategories) {
         this.boardName = boardName;
         this.categoryUseFlag = categoryUseFlag == null ? false:categoryUseFlag;
-        this.hierarchyUseFlag = hierarchyUseFlag == null ? false:hierarchyUseFlag;
         this.commentUseFlag = commentUseFlag == null ? false:commentUseFlag;
         this.noticeUseFlag = noticeUseFlag == null ? false:noticeUseFlag;
         this.fileUseFlag = fileUseFlag == null ? false:fileUseFlag;
         this.delFlag = delFlag == null ? false:delFlag;
         this.createdBy = createdBy;
+        this.boardCategories = boardCategories;
     }
 }

@@ -1,7 +1,7 @@
 package family.namkang.webservice.web;
 
+import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +26,7 @@ public class ApiPostController {
     
     @GetMapping("/list")
     public Page<PostListDto> list(@RequestParam Map<String, String> params, 
-    		@SortDefault.SortDefaults({@SortDefault(sort="GroupNo", direction=Sort.Direction.DESC), @SortDefault(sort="inGroupOrder", direction=Sort.Direction.ASC)}) Pageable pageable) {
+    		@SortDefault.SortDefaults({@SortDefault(sort="id", direction=Sort.Direction.DESC)}) Pageable pageable) {
     	// todo : validation
         return postsService.findAll(params, pageable);
     }
@@ -38,22 +38,26 @@ public class ApiPostController {
         
     }
 
-    @PostMapping("/save")
-    public void save(PostSaveDto dto, MultipartFile[] files){
+    @PostMapping("/create")
+    public void create(PostSaveDto dto){
     	
-    	Post saved = postsService.save(dto, files);
-    	
-    	
+    	try {
+			Post created = postsService.create(dto);
+		} catch (IOException e) {
+			// file save하는데 에러 발생
+			e.printStackTrace();
+		}
     }
 
-//    @PostMapping("/saveAll")
-//    public void saveAll(@RequestBody List<PostsSaveRequestDto> dtos){
-//        postRepository.saveAll(PostsSaveRequestDto.toEntity(dtos));
-//    }
-
-//    @PostMapping("/update")
-//    public void update(@PathVariable Long id, @RequestBody PostsSaveRequestDto dto){
-//        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 포스트가 없습니다. id=" + id));
-//        post.update(dto);
-//    }
+    @PostMapping("/update")
+    public void update(PostSaveDto dto){
+    	
+    	try {
+			Post updated = postsService.update(dto);
+		} catch (IOException e) {
+			// file save하는데 에러 발생
+			e.printStackTrace();
+		}
+    }
+    
 }

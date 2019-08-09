@@ -44,8 +44,8 @@ public class BoardCategory extends BaseTimeEntity {
     private Boolean delFlag;
 
     @Builder
-    public BoardCategory(Board board, Integer orderNo, String boardCategoryName, Boolean delFlag) {
-        this.board = board;
+    public BoardCategory(Long boardId, Integer orderNo, String boardCategoryName, Boolean delFlag) {
+        this.boardId = boardId;
         this.orderNo = orderNo == null ? 0:orderNo;
         this.boardCategoryName = boardCategoryName;
         this.delFlag = delFlag == null ? false:delFlag;

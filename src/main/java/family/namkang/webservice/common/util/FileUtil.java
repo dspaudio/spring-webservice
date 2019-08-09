@@ -1,4 +1,4 @@
-package family.namkang.webservice.domain.file;
+package family.namkang.webservice.common.util;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +9,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import family.namkang.webservice.common.util.DateTimeUtil;
+import family.namkang.webservice.domain.BaseFileEntity;
+import family.namkang.webservice.domain.post.file.PostFile;
 
 public class FileUtil {
 	public static final String BASE_PATH_POST = "D:\\Dev\\workspace_sts4\\spring-webservice\\src\\main\\resources\\upload\\post";
@@ -27,15 +28,14 @@ public class FileUtil {
 		return path.toUri().toString().replaceFirst(exclude, "");
 	}
 	
-	public static List<File> getUploadedFilesPost (MultipartFile[] files, Long postId) throws IOException {
-        List<File> uploads = new ArrayList<File>();
-		for (MultipartFile multipartFile : files) {
-			File f = File.builder().build();
-			f.setMultipartFile(multipartFile, postId);
-			uploads.add( f );
+	public static boolean removeFromDisk(String path) {
+		try {
+			Files.delete( Paths.get(path) );
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
 		}
-		return uploads;
+		
 	}
-	
-	
 }

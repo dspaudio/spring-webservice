@@ -1,16 +1,16 @@
-package family.namkang.webservice.dto.file;
+package family.namkang.webservice.dto.post.file;
 
 import family.namkang.webservice.common.util.DateTimeUtil;
 import family.namkang.webservice.common.util.DateTimeUtil.Pattern;
-import family.namkang.webservice.domain.file.File;
+import family.namkang.webservice.domain.post.file.PostFile;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class FileOwnedDto {
+public class PostFileOwnedDto {
     private String id;
     private String fileName;
-    private String fileUrl;
+    private String fileUri;
     private String filePath;
     private String mimeType;
     private Long fileSize;
@@ -18,10 +18,10 @@ public class FileOwnedDto {
     private String modifiedDate;
 
     @Builder
-    public FileOwnedDto(File entity) {
+    public PostFileOwnedDto(PostFile entity) {
         this.id = entity.getId().toString();
         this.fileName = entity.getFileName();
-        this.fileUrl = entity.getFileUrl();
+        this.fileUri = entity.getFileUri();
         this.filePath = entity.getFilePath();
         this.mimeType = entity.getMimeType();
         this.fileSize = entity.getFileSize();

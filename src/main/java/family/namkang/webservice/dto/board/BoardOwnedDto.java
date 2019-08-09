@@ -9,7 +9,6 @@ public class BoardOwnedDto {
     private Long id;
     private String boardName;
     private Boolean categoryUseFlag;
-    private Boolean hierarchyUseFlag;
     private Boolean commentUseFlag;
     private Boolean noticeUseFlag;
     private Boolean fileUseFlag;
@@ -20,7 +19,6 @@ public class BoardOwnedDto {
         this.id = entity.getId();
         this.boardName = entity.getBoardName();
         this.categoryUseFlag = entity.getCategoryUseFlag();
-        this.hierarchyUseFlag = entity.getHierarchyUseFlag();
         this.commentUseFlag = entity.getCommentUseFlag();
         this.noticeUseFlag = entity.getNoticeUseFlag();
         this.fileUseFlag = entity.getFileUseFlag();
