@@ -7,20 +7,15 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PostRemove;
 
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
 import family.namkang.webservice.common.util.FileUtil;
 import family.namkang.webservice.domain.BaseFileEntity;
-import family.namkang.webservice.domain.BaseTimeEntity;
 import family.namkang.webservice.domain.post.Post;
-import family.namkang.webservice.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -61,5 +56,4 @@ public class PostFile extends BaseFileEntity {
 		setMimeType( multipartFile.getContentType() );
 		setFileSize( multipartFile.getSize() );
     }
-    
 }

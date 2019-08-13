@@ -1,16 +1,11 @@
 package family.namkang.webservice.dto.post;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import family.namkang.webservice.common.util.FileUtil;
 import family.namkang.webservice.domain.post.Post;
-import family.namkang.webservice.domain.post.file.PostFile;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

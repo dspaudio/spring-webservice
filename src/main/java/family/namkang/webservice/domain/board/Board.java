@@ -1,7 +1,5 @@
 package family.namkang.webservice.domain.board;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;

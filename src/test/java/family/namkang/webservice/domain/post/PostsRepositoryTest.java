@@ -25,7 +25,6 @@ import family.namkang.webservice.domain.board.category.BoardCategoryRepository;
 import family.namkang.webservice.domain.post.Post;
 import family.namkang.webservice.domain.post.PostRepository;
 import family.namkang.webservice.domain.post.file.PostFileRepository;
-import family.namkang.webservice.domain.post.file.PostFile;
 import family.namkang.webservice.domain.user.User;
 import family.namkang.webservice.domain.user.UserRepository;
 
@@ -48,7 +47,6 @@ public class PostsRepositoryTest {
     private Board board;
     private BoardCategory boardCategory;
     private Post savedPost;
-    private PostFile savedFile;
 
     @BeforeClass
     public static void setupForClass(){
@@ -90,16 +88,7 @@ public class PostsRepositoryTest {
 			        .createdById(user.getId())
 			        .boardCategoryId(boardCategory.getId())
 			        .build());
-//	        this.savedFile = fileRepository.save(File.builder() 
-//          .fileName("파일파일.jpg")
-//          .fileUrl("/2019/07/15/파일파일.jpg") 
-//          .filePath("\\2019\\07\\15\\파일파일.jpg")
-//          .mimeType("image/jpeg") 
-//          .fileSize(100L) 
-//          .postId(savedPost.getId()) 
-//          .build());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
          
@@ -116,11 +105,6 @@ System.out.println(savedPost);
         assertThat(post.getTitle(), is("테스트 게시글"));
         assertThat(post.getContent(), is("테스트 본문"));
         assertThat(post.getCreatedById(), is(user.getId()));
-        
-        
-//        assertThat(post.getFiles().get(0).getFileName(),  is(savedFile.getFileName()));
-//        assertThat(post.getFiles().get(0).getFileSize(),  is(savedFile.getFileSize()));
-//        assertThat(post.getFiles().get(0).getMimeType(),  is(savedFile.getMimeType()));
          
     }
     

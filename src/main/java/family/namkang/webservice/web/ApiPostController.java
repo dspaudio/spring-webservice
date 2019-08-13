@@ -8,9 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import family.namkang.webservice.domain.post.Post;
 import family.namkang.webservice.dto.post.PostDetailDto;
 import family.namkang.webservice.dto.post.PostListDto;
 import family.namkang.webservice.dto.post.PostSaveDto;
@@ -42,7 +40,7 @@ public class ApiPostController {
     public void create(PostSaveDto dto){
     	
     	try {
-			Post created = postsService.create(dto);
+			postsService.create(dto);
 		} catch (IOException e) {
 			// file save하는데 에러 발생
 			e.printStackTrace();
@@ -53,7 +51,7 @@ public class ApiPostController {
     public void update(PostSaveDto dto){
     	
     	try {
-			Post updated = postsService.update(dto);
+			postsService.update(dto);
 		} catch (IOException e) {
 			// file save하는데 에러 발생
 			e.printStackTrace();

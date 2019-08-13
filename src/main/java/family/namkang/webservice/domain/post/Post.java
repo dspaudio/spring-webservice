@@ -3,12 +3,8 @@ package family.namkang.webservice.domain.post;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -18,9 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -28,7 +22,6 @@ import javax.persistence.OrderBy;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.web.multipart.MultipartFile;
 
-import family.namkang.webservice.common.util.FileUtil;
 import family.namkang.webservice.domain.BaseTimeEntity;
 import family.namkang.webservice.domain.board.Board;
 import family.namkang.webservice.domain.board.category.BoardCategory;

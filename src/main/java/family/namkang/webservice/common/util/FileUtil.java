@@ -4,13 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import family.namkang.webservice.domain.BaseFileEntity;
-import family.namkang.webservice.domain.post.file.PostFile;
 
 public class FileUtil {
 	public static final String BASE_PATH_POST = "D:\\Dev\\workspace_sts4\\spring-webservice\\src\\main\\resources\\upload\\post";
