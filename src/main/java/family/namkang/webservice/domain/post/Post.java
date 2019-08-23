@@ -22,12 +22,11 @@ import javax.persistence.OrderBy;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.web.multipart.MultipartFile;
 
-import family.namkang.webservice.domain.BaseTimeEntity;
+import family.namkang.webservice.domain.BaseUserCreatedEntity;
 import family.namkang.webservice.domain.board.Board;
 import family.namkang.webservice.domain.board.category.BoardCategory;
 import family.namkang.webservice.domain.post.comment.PostComment;
 import family.namkang.webservice.domain.post.file.PostFile;
-import family.namkang.webservice.domain.user.User;
 import family.namkang.webservice.dto.post.PostSaveDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -38,7 +37,7 @@ import lombok.NoArgsConstructor;
 @DynamicInsert  //insert 시 null 인필드 제외
 @Getter
 @Entity
-public class Post extends BaseTimeEntity {
+public class Post extends BaseUserCreatedEntity {
     
     @Id
     @GeneratedValue
@@ -68,12 +67,8 @@ public class Post extends BaseTimeEntity {
     @Basic(fetch = FetchType.LAZY)
     private String content;
 
-    private Long createdById;
-    @ManyToOne
-    @JoinColumn(name = "createdById", insertable = false, updatable = false)
-    private User createdBy;
-
     @OneToMany(mappedBy="postId", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("createdDate asc")
     @Basic(fetch = FetchType.LAZY)
     private List<PostFile> postFiles;
 

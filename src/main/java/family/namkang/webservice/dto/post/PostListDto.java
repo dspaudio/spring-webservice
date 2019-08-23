@@ -22,6 +22,7 @@ public class PostListDto {
     private String title;
     private UserOwnedDto createdBy;
     private Integer filesCount;
+    private Integer commentCount;
     private String createdDate;
     private String modifiedDate;
 
@@ -35,6 +36,7 @@ public class PostListDto {
         this.title = entity.getTitle();
         this.createdBy = new UserOwnedDto(entity.getCreatedBy());
         this.filesCount = entity.getPostFiles().size();
+        this.commentCount = entity.getPostComment().size();
         this.createdDate = DateTimeUtil.toString(entity.getCreatedDate(), Pattern.YYYYMMDDHMS);
         this.modifiedDate = DateTimeUtil.toString(entity.getModifiedDate(), Pattern.YYYYMMDDHMS);
     }

@@ -27,22 +27,22 @@ public abstract class BaseFileEntity extends BaseTimeEntity {
 	
 	@Id
 	@Type(type="uuid-char")
-	private UUID id;
+	protected UUID id;
 
     @Column(nullable = false, length = 300)
-    private String fileName;
+    protected String fileName;
 
     @Column(nullable = false, length = 1000)
-    private String fileUri;
+    protected String fileUri;
 
     @Column(nullable = false, length = 1000)
-    private String filePath;
+    protected String filePath;
 
     @Column(nullable = false, length = 1000)
-    private String mimeType;
+    protected String mimeType;
 
     @Column(nullable = false)
-    private Long fileSize;
+    protected Long fileSize;
     
     
     protected BaseFileEntity(MultipartFile multipartFile) throws IOException {

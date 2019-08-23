@@ -9,9 +9,9 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicInsert;
 
-import family.namkang.webservice.domain.BaseTimeEntity;
+import family.namkang.webservice.domain.BaseUserCreatedEntity;
 import family.namkang.webservice.domain.post.Post;
-import family.namkang.webservice.domain.user.User;
+import family.namkang.webservice.dto.post.comment.PostCommentSaveDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @DynamicInsert  //insert 시 null 인필드 제외
 @Getter
 @Entity
-public class PostComment extends BaseTimeEntity {
+public class PostComment extends BaseUserCreatedEntity {
 
     @Id
     @GeneratedValue
@@ -35,11 +35,6 @@ public class PostComment extends BaseTimeEntity {
     @Column(nullable = false, length = 4000)
     private String content;
 
-    private Long createdById;
-    @ManyToOne
-    @JoinColumn(name = "createdById", insertable = false, updatable = false)
-    private User createdBy; 
-
     @Builder
     public PostComment(Long postId, String content, Long createdById) {
         this.postId = postId;
@@ -47,8 +42,8 @@ public class PostComment extends BaseTimeEntity {
         this.createdById = createdById;
     }
     
-    public void update(String content) {
-        this.content = content;
+    public void update(PostCommentSaveDto dto) {
+        this.content = dto.getContent();
     }
 
 }

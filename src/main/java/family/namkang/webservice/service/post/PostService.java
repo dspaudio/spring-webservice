@@ -2,6 +2,7 @@ package family.namkang.webservice.service.post;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import family.namkang.webservice.common.exception.ExceptionDataEnums;
+import family.namkang.webservice.common.exception.MessageException;
 import family.namkang.webservice.domain.post.Post;
 import family.namkang.webservice.domain.post.PostRepository;
 import family.namkang.webservice.domain.post.PostSpecs;
@@ -37,25 +40,34 @@ public class PostService {
     }
     
     @Transactional
-    public Post create(PostSaveDto dto) throws IOException{
+    public Post insert(PostSaveDto dto) throws MessageException{
     	if (dto==null) {
     		throw new NullPointerException();
     	}
-    	
-    	Post post = postRepository.save(dto.toEntity());
-        post.addPostFiles(dto.getFiles());
-        
-    	return post;
+
+        try {
+        	Post post = postRepository.save(dto.toEntity());
+			post.addPostFiles(dto.getFiles());
+	    	return post;
+		} catch (IOException e) {
+			throw new MessageException(ExceptionDataEnums.FILE_SYSTEM_ERROR);
+		}
     }
     
     @Transactional
-    public Post update(PostSaveDto dto) throws IOException{
+    public Post update(PostSaveDto dto) throws MessageException{
     	if (dto==null) {
     		throw new NullPointerException();
     	}
     	
     	Post post = postRepository.findById(dto.getId()).orElseThrow(EntityNotFoundException::new);
-    	post.update(dto);
+    	if ( !post.checkOwner(dto.getCreatedById()) ) throw new MessageException(ExceptionDataEnums.NOT_AUTHORIZED);
+    	
+    	try {
+			post.update(dto);
+		} catch (IOException e) {
+			throw new MessageException(ExceptionDataEnums.FILE_SYSTEM_ERROR);
+		}
         
     	return post;
     }

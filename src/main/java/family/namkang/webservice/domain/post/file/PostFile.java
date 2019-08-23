@@ -44,16 +44,18 @@ public class PostFile extends BaseFileEntity {
     }
     
     public PostFile(MultipartFile multipartFile, Long postId) throws IOException {
-    	this.postId = postId;
-    	super.setId(UUID.randomUUID());
+    	super(multipartFile);
+    	this.postId = postId; 
     	
-		Path path = Paths.get(FileUtil.getFilePahtPost().toString(), super.getId().toString());
-		multipartFile.transferTo( path );
-    	
-		setFileName( multipartFile.getOriginalFilename() );
-		setFileUri( FileUtil.getFileUri(path) );
-		setFilePath( path.toString() );
-		setMimeType( multipartFile.getContentType() );
-		setFileSize( multipartFile.getSize() );
+//    	super.setId(UUID.randomUUID());
+//    	
+//		Path path = Paths.get(FileUtil.getFilePahtPost().toString(), super.getId().toString());
+//		multipartFile.transferTo( path );
+//    	
+//		setFileName( multipartFile.getOriginalFilename() );
+//		setFileUri( FileUtil.getFileUri(path) );
+//		setFilePath( path.toString() );
+//		setMimeType( multipartFile.getContentType() );
+//		setFileSize( multipartFile.getSize() );
     }
 }
