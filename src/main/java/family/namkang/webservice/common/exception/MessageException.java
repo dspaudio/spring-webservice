@@ -4,7 +4,13 @@ import lombok.Getter;
 
 public class MessageException extends Exception {
 	
-    @Getter
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6169041720145104113L;
+	
+	
+	@Getter
 	private ExceptionDataEnums exceptionDataEnum;
 
 	public MessageException(ExceptionDataEnums exEnum) {

@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.util.StringUtils;
 
-import family.namkang.webservice.domain.BaseTimeEntity;
+import family.namkang.webservice.domain.base.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

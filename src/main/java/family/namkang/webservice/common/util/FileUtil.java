@@ -6,12 +6,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileUtil {
-	public static final String BASE_PATH_POST = "D:\\Dev\\workspace_sts4\\spring-webservice\\src\\main\\resources\\upload\\post";
+	public static final String BASE_PATH_NEWS = "D:\\Dev\\workspace_sts4\\spring-webservice\\src\\main\\resources\\upload\\news";
 	
 	
-	public static Path getFilePahtPost() throws IOException{
+	public static Path getFilePahtNews() throws IOException{
 		
-		Path dir = Paths.get(BASE_PATH_POST, DateTimeUtil.getCurrentyyyy(), DateTimeUtil.getCurrentMM(), DateTimeUtil.getCurrentdd());
+		Path dir = Paths.get(BASE_PATH_NEWS, DateTimeUtil.getCurrentyyyy(), DateTimeUtil.getCurrentMM(), DateTimeUtil.getCurrentdd());
 		Files.createDirectories(dir);
 		
 		return dir;
