@@ -21,7 +21,7 @@ import javax.persistence.OrderBy;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.web.multipart.MultipartFile;
 
-import family.namkang.webservice.common.KeyValue;
+import family.namkang.webservice.common.EnumCodeName;
 import family.namkang.webservice.domain.base.post.BasePostEntity;
 import family.namkang.webservice.domain.news.comment.NewsComment;
 import family.namkang.webservice.domain.news.file.NewsFile;
@@ -116,7 +116,7 @@ public class News extends BasePostEntity {
     } 
     
     
-    public enum Category implements KeyValue {
+    public enum Category implements EnumCodeName {
         SOC("사회"),
         POL("정치"),
         ECO("경제"),
@@ -125,19 +125,19 @@ public class News extends BasePostEntity {
         LIF("생활"),
         TEC("기술");
 
-        private String value;
+        private String dispName;
 
-        Category(String value) {
-            this.value = value;
+        Category(String dispName) {
+            this.dispName = dispName;
         }
         
         @Override
-        public String getKey() {
+        public String getCode() {
             return name();
         }
         @Override
-        public String getValue() {
-            return value;
+        public String getName() {
+            return dispName;
         }
     }
 }

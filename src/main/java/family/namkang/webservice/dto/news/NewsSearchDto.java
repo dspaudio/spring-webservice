@@ -1,6 +1,7 @@
 package family.namkang.webservice.dto.news;
 
 
+import family.namkang.webservice.domain.news.News;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class NewsSearchDto {
     private Long userId;
-    private Long category;
+    private News.Category category;
     private Boolean noticeFlag;
     private Boolean delFlag;
     private String title;

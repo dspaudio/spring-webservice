@@ -1,6 +1,7 @@
 package family.namkang.webservice.web;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -12,7 +13,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import family.namkang.webservice.common.EnumCodeName;
 import family.namkang.webservice.common.exception.MessageException;
+import family.namkang.webservice.common.util.EnumUtil;
+import family.namkang.webservice.dto.EnumCodeNameDto;
 import family.namkang.webservice.dto.news.NewsDetailDto;
 import family.namkang.webservice.dto.news.NewsListDto;
 import family.namkang.webservice.dto.news.NewsSaveDto;
@@ -45,29 +49,26 @@ public class ApiNewsController {
 
     @PostMapping("/create")
     public ResponseEntity<String> create(NewsSaveDto dto) throws MessageException, IOException{
-    	
 		newsService.insert(dto);
 		return ResponseEntity.status(HttpStatus.OK)
-			       .contentType(MediaType.TEXT_PLAIN)
-			       .body("뉴스가 등록되었습니다. 제목: " + dto.getTitle());
+				.contentType(MediaType.TEXT_PLAIN)
+				.body("뉴스가 등록되었습니다. 제목: " + dto.getTitle());
     }
 
     @PostMapping("/modify")
     public ResponseEntity<String> modify(NewsSaveDto dto) throws MessageException, IOException{
-    	
-			newsService.update(dto);
-			return ResponseEntity.status(HttpStatus.OK)
-				       .contentType(MediaType.TEXT_PLAIN)
-				       .body("뉴스가 수정되었습니다. 제목: " + dto.getTitle());
+		newsService.update(dto);
+		return ResponseEntity.status(HttpStatus.OK)
+				.contentType(MediaType.TEXT_PLAIN)
+				.body("뉴스가 수정되었습니다. 제목: " + dto.getTitle());
     }
 
     @PostMapping("/delete")
     public ResponseEntity<String> delete(NewsSaveDto dto) throws MessageException{
-    	
-			newsService.delete(dto);
-			return ResponseEntity.status(HttpStatus.OK)
-				       .contentType(MediaType.TEXT_PLAIN)
-				       .body("뉴스가 삭제되었습니다. 제목: " + dto.getTitle());
+		newsService.delete(dto);
+		return ResponseEntity.status(HttpStatus.OK)
+				.contentType(MediaType.TEXT_PLAIN)
+				.body("뉴스가 삭제되었습니다. 제목: " + dto.getTitle());
     }
     
     @GetMapping("/addComment")
@@ -75,25 +76,31 @@ public class ApiNewsController {
     	// todo : input validation
         newsCommentService.insert(dto);
 		return ResponseEntity.status(HttpStatus.OK)
-			       .contentType(MediaType.TEXT_PLAIN)
-			       .body("코멘트가 등록되었습니다.");
+				.contentType(MediaType.TEXT_PLAIN)
+				.body("코멘트가 등록되었습니다.");
     }
     
     @GetMapping("/modComment")
     public ResponseEntity<String> modComment(NewsCommentSaveDto dto) throws MessageException {
     	// todo : input validation
-			newsCommentService.update(dto);
-			return ResponseEntity.status(HttpStatus.OK)
-				       .contentType(MediaType.TEXT_PLAIN)
-				       .body("코멘트가 수정되었습니다.");
+		newsCommentService.update(dto);
+		return ResponseEntity.status(HttpStatus.OK)
+				.contentType(MediaType.TEXT_PLAIN)
+				.body("코멘트가 수정되었습니다.");
     }
     @GetMapping("/delComment")
     public ResponseEntity<String> delComment(NewsCommentSaveDto dto) throws MessageException {
     	// todo : input validation
-			newsCommentService.delete(dto);
-			return ResponseEntity.status(HttpStatus.OK)
-				       .contentType(MediaType.TEXT_PLAIN)
-				       .body("코멘트가 삭제되었습니다.");
+    	newsCommentService.delete(dto);
+    	return ResponseEntity.status(HttpStatus.OK)
+    			.contentType(MediaType.TEXT_PLAIN)
+    			.body("코멘트가 삭제되었습니다.");
+    }
+    
+    @GetMapping("/categoryList")
+    public List<EnumCodeNameDto> categoryList() {
+    	// todo : input validation
+    	return EnumUtil.factoryEnumList().get(EnumUtil.NEWS_CATEGORY);
     }
     
 }

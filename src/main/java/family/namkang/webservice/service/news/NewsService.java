@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Service
 public class NewsService {
+	
     private NewsRepository newsRepository;
     
     @Transactional(readOnly = true)

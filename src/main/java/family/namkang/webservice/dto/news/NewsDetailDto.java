@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import family.namkang.webservice.common.util.DateTimeUtil;
 import family.namkang.webservice.common.util.DateTimeUtil.Pattern;
 import family.namkang.webservice.domain.news.News;
+import family.namkang.webservice.dto.EnumCodeNameDto;
 import family.namkang.webservice.dto.news.comment.NewsCommentListDto;
 import family.namkang.webservice.dto.news.file.NewsFileOwnedDto;
 import family.namkang.webservice.dto.user.UserOwnedDto;
@@ -16,7 +17,7 @@ import lombok.Getter;
 @Getter
 public class NewsDetailDto {
     private Long id;
-    private News.Category category;
+    private EnumCodeNameDto category;
     private Boolean noticeFlag;
     private Boolean delFlag;
     private String title;
@@ -30,7 +31,7 @@ public class NewsDetailDto {
     @Builder
     public NewsDetailDto(News entity) {
         this.id = entity.getId();
-        this.category = entity.getCategory();
+        this.category = new EnumCodeNameDto(entity.getCategory());
         this.noticeFlag = entity.getNoticeFlag();
         this.delFlag = entity.getTempFlag();
         this.title = entity.getTitle();
