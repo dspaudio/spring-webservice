@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import family.namkang.webservice.common.exception.ExceptionDataEnums;
+import family.namkang.webservice.common.exception.ExceptionEnums;
 import family.namkang.webservice.common.exception.MessageException;
 import family.namkang.webservice.domain.news.comment.NewsComment;
 import family.namkang.webservice.domain.news.comment.NewsCommentRepository;
@@ -50,7 +50,7 @@ public class NewsCommentService {
     	}
     	
     	NewsComment newsComment = newsCommentRepository.findById(dto.getId()).orElseThrow(EntityNotFoundException::new);
-    	if ( !newsComment.checkOwner(dto.getCreatedById()) ) throw new MessageException(ExceptionDataEnums.NOT_AUTHORIZED);
+    	if ( !newsComment.checkOwner(dto.getCreatedById()) ) throw new MessageException(ExceptionEnums.NOT_AUTHORIZED);
     	newsComment.update(dto);
         
     	return newsComment;
@@ -63,7 +63,7 @@ public class NewsCommentService {
     	}
     	
     	NewsComment newsComment = newsCommentRepository.findById(dto.getId()).orElseThrow(EntityNotFoundException::new);
-    	if ( !newsComment.checkOwner(dto.getCreatedById()) ) throw new MessageException(ExceptionDataEnums.NOT_AUTHORIZED);
+    	if ( !newsComment.checkOwner(dto.getCreatedById()) ) throw new MessageException(ExceptionEnums.NOT_AUTHORIZED);
     	
     	newsCommentRepository.deleteById( dto.getId() );
         

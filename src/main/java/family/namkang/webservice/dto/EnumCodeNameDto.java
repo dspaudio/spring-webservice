@@ -6,13 +6,13 @@ import lombok.Getter;
 
 @Getter
 public class EnumCodeNameDto {
-    private String code;
     private String name;
+    private String code;
 
     @Builder
     public EnumCodeNameDto(EnumCodeName codeName) {
-    	this.code = codeName.getCode();
         this.name = codeName.getName();
+    	this.code = codeName.getCode();
     }
 
 }

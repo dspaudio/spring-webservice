@@ -11,9 +11,9 @@ public class MessageException extends Exception {
 	
 	
 	@Getter
-	private ExceptionDataEnums exceptionDataEnum;
+	private ExceptionEnums exceptionDataEnum;
 
-	public MessageException(ExceptionDataEnums exEnum) {
+	public MessageException(ExceptionEnums exEnum) {
 		super( exEnum.getMessage() );
 		exceptionDataEnum = exEnum;
 	}
