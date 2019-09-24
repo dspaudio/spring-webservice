@@ -2,8 +2,7 @@ HELP.md
 .gradle
 build/
 bin/
-!frontend/build
-!frontend/bin/**
+frontend/**
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
@@ -34,5 +33,5 @@ out/
 ### VS Code ###
 .vscode/
 node_modules/
-src/main/resources/static/
-src/main/resources/upload/
+src/main/resources/upload/**
+upload/**

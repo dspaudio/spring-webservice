@@ -13,6 +13,7 @@ import javax.persistence.PostRemove;
 import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
+import family.namkang.webservice.common.util.DateTimeUtil;
 import family.namkang.webservice.common.util.FileUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -24,7 +25,6 @@ import lombok.Setter;
 @Setter(AccessLevel.PROTECTED)
 @MappedSuperclass
 public abstract class BaseFileEntity extends BaseTimeEntity {
-	protected static final String BASE_PATH = "D:\\Dev\\workspace_sts4\\spring-webservice\\src\\main\\resources\\upload";
 	
 	@Id
 	@Type(type="uuid-char")
@@ -52,7 +52,8 @@ public abstract class BaseFileEntity extends BaseTimeEntity {
     protected BaseFileEntity(MultipartFile multipartFile) throws IOException {
     	this.id = UUID.randomUUID();
     	
-		Path path = Paths.get(getBasePathImpl(), this.id.toString());
+		Path path = Paths.get(getBasePathImpl(), DateTimeUtil.getCurrentyyyy(), DateTimeUtil.getCurrentMM(), DateTimeUtil.getCurrentdd(), this.id.toString());
+		
 		multipartFile.transferTo( path );
     	
         this.fileName = multipartFile.getOriginalFilename();

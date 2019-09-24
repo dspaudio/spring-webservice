@@ -2,12 +2,12 @@
 spring:
   devtools:
    restart:
-     enabled: false # 파일업로드->변경사항있는걸로 인식하고 server를 재기동->자동재기동기능 꺼버림
+     enabled: true # 파일업로드->변경사항있는걸로 인식하고 server를 재기동->자동재기동기능 꺼버림
   profiles:
     active: local # 기본 환경 선택
   jpa:
     hibernate:
-      use-new-id-generator-mappings: false # Hibernate의 id 생성 전략을 따라갈지 결정하는 useNewIdGeneratorMappings 설정. 2.0부터는 true가 기본값. -> auto increment가 잘 안먹히게됨 참조 : https://jojoldu.tistory.com/295
+      use-new-id-generator-mappings: false # Hibernate의 id 생성 전략을 따라갈지 결정하는 useNewIdGeneratorMappings 설정. 2.0부터는 true가 기본값. -> auto increment가 잘 안먹히게됨  *참조 : https://jojoldu.tistory.com/295
       
   # DATA WEB (SpringDataWebProperties)
   data:

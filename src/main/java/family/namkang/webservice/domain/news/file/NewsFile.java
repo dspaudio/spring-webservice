@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.web.multipart.MultipartFile;
 
+import family.namkang.webservice.common.util.FileUtil;
 import family.namkang.webservice.domain.base.BaseFileEntity;
 import family.namkang.webservice.domain.news.News;
 import lombok.AccessLevel;
@@ -32,7 +33,7 @@ public class NewsFile extends BaseFileEntity {
 
 	@Override
 	protected String getBasePathImpl() {
-		return BASE_PATH + "\\news";
+		return FileUtil.BASE_PATH + "\\news";
 	}
 
     @Builder

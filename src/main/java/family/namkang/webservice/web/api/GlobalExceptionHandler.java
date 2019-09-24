@@ -1,4 +1,4 @@
-package family.namkang.webservice.web;
+package family.namkang.webservice.web.api;
 
 import java.io.IOException;
 
@@ -8,13 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import family.namkang.webservice.common.exception.ExceptionEnums;
 import family.namkang.webservice.common.exception.MessageException;
 import family.namkang.webservice.dto.ExceptionEnumDto;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler {
 	
     @ExceptionHandler(MessageException.class)

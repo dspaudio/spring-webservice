@@ -1,4 +1,4 @@
-package family.namkang.webservice.web;
+package family.namkang.webservice.web.api;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import family.namkang.webservice.common.EnumCodeName;
 import family.namkang.webservice.common.exception.MessageException;
 import family.namkang.webservice.common.util.EnumUtil;
 import family.namkang.webservice.dto.EnumCodeNameDto;
