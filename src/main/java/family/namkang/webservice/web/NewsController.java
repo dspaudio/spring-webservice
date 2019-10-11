@@ -23,13 +23,13 @@ public class NewsController {
     private NewsService newsService;
 
     @GetMapping("/list")
-    public String list(Model model, @RequestParam Map<String, String> params, 
+    public void list(Model model, @RequestParam Map<String, String> params, 
     		@SortDefault.SortDefaults({@SortDefault(sort="id", direction=Sort.Direction.DESC)}) Pageable pageable) {
     	// todo : input validation
     	
-    	Page<NewsListDto> page = newsService.findAll(params, pageable);
-    	model.addAttribute("page", page);
+    	Page<NewsListDto> listData = newsService.findAll(params, pageable);
+    	model.addAttribute("listData", listData);
     	
-    	return "index";
+    	
     }
 }

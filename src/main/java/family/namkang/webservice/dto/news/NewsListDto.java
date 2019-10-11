@@ -31,8 +31,8 @@ public class NewsListDto {
         this.createdBy = new UserOwnedDto(entity.getCreatedBy());
         this.filesCount = entity.getNewsFiles().size();
         this.commentCount = entity.getNewsComment().size();
-        this.createdDate = DateTimeUtil.toString(entity.getCreatedDate(), Pattern.YYYYMMDDHMS);
-        this.modifiedDate = DateTimeUtil.toString(entity.getModifiedDate(), Pattern.YYYYMMDDHMS);
+        this.createdDate = DateTimeUtil.toString(entity.getCreatedDate(), Pattern.YYYYMMDD);
+        this.modifiedDate = DateTimeUtil.toString(entity.getModifiedDate(), Pattern.YYYYMMDD);
     }
 
 }

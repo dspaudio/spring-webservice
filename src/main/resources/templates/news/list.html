@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>NEWS LIST</title>
+    <style type="text/css">
+        div#content {width:600px}
+        #content table.list_table {border-collapse: collapse; width: 100%;}
+        #content table.list_table td,th {border: solid 1px; padding: 3px 5px;}
+        div.pagenate {text-align: center;}
+        ul.page_nums {padding: 0;}
+        ul.page_nums li {display: inline; margin: 0 2px;}
+    </style>
+</head>
+<body>
+    <h1>NEWS LIST BODY</h1>
+    <div id="content">
+    
+        <table class="list_table">
+            <colgroup>
+                <col width="60px" />
+                <col width="*" />
+                <col width="60px" />
+                <col width="60px" />
+                <col width="60px" />
+                <col width="60px" />
+            </colgroup>
+            <tr>
+                <th>분류</th>
+                <th>제목</th>
+                <th>글쓴이 이름</th>
+                <th>첨부파일 수</th>
+                <th>코멘트 수</th>
+                <th>작성일시</th>
+            </tr>
+            <tr th:each="news : ${listData.content}">
+                <td th:text="${news.category.name}">카테고리 이름</td>
+                <td th:text="${news.title}">제목</td>
+                <td th:text="${news.createdBy.userName}">글쓴이 이름</td>
+                <td th:text="${news.filesCount}">첨부파일 수</td>
+                <td th:text="${news.commentCount}">코멘트 수</td>
+                <td th:text="${news.createdDate}">작성일시</td>
+            </tr>
+        </table>
+        
+        <div class="pagenate" >
+	        <ul class="page_nums" th:with="startNumber=${T(Math).floor(listData.number/10)}*10+1, endNumber=(${listData.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${listData.totalPages}">
+	            <li><a aria-label="Previous" href="/board/list?page=1">&laquo;</a></li>
+	            <li th:style="${listData.first} ? 'display:none'">
+	                <a th:href="@{/board/list(page=${listData.number})}">&lsaquo;</a>
+	            </li>
+	    
+	            <li th:each="page :${#numbers.sequence(startNumber, endNumber)}" th:class="(${page} == ${listData.number}+1) ? 'active'">
+	                <a th:href="@{/board/list(page=${page})}" th:text="${page}"><span class="sr-only"></span></a>
+	            </li>
+	    
+	            <li th:style="${listData.last} ? 'display:none'">
+	                <a th:href="@{/board/list(page=${listData.number}+2)}">&rsaquo;</a>
+	            </li>
+	            <li><a aria-label="Next" th:href="@{/board/list(page=${listData.totalPages})}">&raquo;</a></li>
+	        </ul>
+        </div>
+    
+    </div>
+
+</body>
+</html>

@@ -17,10 +17,10 @@ spring:
       path: /h2-console # h2 db 웹 클라이언트 접속 url
   devtools:
     livereload:
-      enabled: true # 정적파일들의 실시간 갱신
+      enabled: true # 정적파일들의 실시간 갱신. thymeleaf 템플릿의 변경 내용 실시간 반영
 logging:
   level:
     org.springframework.web: TRACE
-    org.hibernate.type: ERROR  # JPA로 생성되는 쿼리의 파라미터 값 확인
+    org.hibernate.type: TRACE  # JPA로 생성되는 쿼리의 파라미터 값 확인
     org.thymeleaf: TRACE
     org.thymeleaf.TemplateEngine.CONFIG: TRACE

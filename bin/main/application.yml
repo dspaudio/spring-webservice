@@ -1,8 +1,5 @@
 
 spring:
-  devtools:
-   restart:
-     enabled: true # 파일업로드->변경사항있는걸로 인식하고 server를 재기동->자동재기동기능 꺼버림
   profiles:
     active: local # 기본 환경 선택
   jpa:
