@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.multipart.MultipartFile;
 
 import family.namkang.webservice.common.EnumCodeName;
@@ -114,8 +115,7 @@ public class News extends BasePostEntity {
         deleteNewsFilesById(dto.getDeleteFileIds());
         addNewsFiles(dto.getFiles());
     } 
-    
-    
+
     public enum Category implements EnumCodeName {
         SOC("사회"),
         POL("정치"),

@@ -33,7 +33,7 @@
                 <th>코멘트 수</th>
                 <th>작성일시</th>
             </tr>
-            <tr th:each="news : ${listData.content}">
+            <tr th:each="news : ${newsPageResponseDto.elementsList}">
                 <td th:text="${news.category.name}">카테고리 이름</td>
                 <td th:text="${news.title}">제목</td>
                 <td th:text="${news.createdBy.userName}">글쓴이 이름</td>
@@ -43,21 +43,32 @@
             </tr>
         </table>
         
-        <div class="pagenate" >
-	        <ul class="page_nums" th:with="startNumber=${T(Math).floor(listData.number/10)}*10+1, endNumber=(${listData.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${listData.totalPages}">
-	            <li><a aria-label="Previous" href="/board/list?page=1">&laquo;</a></li>
-	            <li th:style="${listData.first} ? 'display:none'">
-	                <a th:href="@{/board/list(page=${listData.number})}">&lsaquo;</a>
-	            </li>
-	    
-	            <li th:each="page :${#numbers.sequence(startNumber, endNumber)}" th:class="(${page} == ${listData.number}+1) ? 'active'">
-	                <a th:href="@{/board/list(page=${page})}" th:text="${page}"><span class="sr-only"></span></a>
-	            </li>
-	    
-	            <li th:style="${listData.last} ? 'display:none'">
-	                <a th:href="@{/board/list(page=${listData.number}+2)}">&rsaquo;</a>
-	            </li>
-	            <li><a aria-label="Next" th:href="@{/board/list(page=${listData.totalPages})}">&raquo;</a></li>
+        
+        <style>
+            .pagenate ul.linkList { list-style:none; }
+            .pagenate ul.linkList li { margin:0 5px; float:left; }
+        </style>
+        <div class="pagenate" th:with="pagenate=${newsPageResponseDto}">
+	        <ul class="linkList">
+                <li>
+                    <a aria-label="First" href="/news/list?requestPage=1">&laquo;</a>
+                </li>
+                
+                <li th:with="prev=${pagenate.currentPage-pagenate.pagesPerBlock < 1 ? 1 : pagenate.currentPage-pagenate.pagesPerBlock}">
+                    <a th:href="@{/news/list(requestPage=${prev})}">&lsaquo;</a>
+                </li>
+        
+                <li th:each="page :${#numbers.sequence(pagenate.blockStart, pagenate.blockEnd)}" th:style="${page == pagenate.currentPage} ? 'font-weight:bold'">
+                    <a th:href="@{/news/list(requestPage=${page})}" th:text="${page}"><span class="sr-only"></span></a>
+                </li>
+        
+                <li th:with="next=${pagenate.currentPage+pagenate.pagesPerBlock > pagenate.totalPages ? pagenate.totalPages : pagenate.currentPage+pagenate.pagesPerBlock}">
+                    <a th:href="@{/news/list(requestPage=${next})}">&rsaquo;</a>
+                </li>
+                
+                <li>
+                    <a aria-label="Last" th:href="@{/news/list(requestPage=${pagenate.totalPages})}">&raquo;</a>
+                </li>
 	        </ul>
         </div>
     

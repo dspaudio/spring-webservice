@@ -11,14 +11,6 @@ spring:
     web:
       sort:
         sort-parameter: sort # Sort parameter name.
-      pageable:
-        default-page-size: 20 # Default page size.
-        max-page-size: 1000 # Maximum page size to be accepted.
-        one-indexed-parameters: false # Whether to expose and assume 1-based page number indexes.
-        page-parameter: page # Page index parameter name.
-        prefix: # General prefix to be prepended to the page number and page size parameters.
-        qualifier-delimiter: _ # Delimiter to be used between the qualifier and the actual page number and size properties.
-        size-parameter: size # Page size parameter name.
   servlet:
     multipart:
       max-file-size: 10MB
