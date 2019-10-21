@@ -1,5 +1,7 @@
 package family.namkang.webservice.dto.news;
 
+import java.time.LocalDateTime;
+
 import family.namkang.webservice.common.util.DateTimeUtil;
 import family.namkang.webservice.common.util.DateTimeUtil.Pattern;
 import family.namkang.webservice.domain.news.News;
@@ -18,8 +20,8 @@ public class NewsListDto {
     private UserOwnedDto createdBy;
     private Integer filesCount;
     private Integer commentCount;
-    private String createdDate;
-    private String modifiedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     @Builder
     public NewsListDto(News entity) {
@@ -31,8 +33,8 @@ public class NewsListDto {
         this.createdBy = new UserOwnedDto(entity.getCreatedBy());
         this.filesCount = entity.getNewsFiles().size();
         this.commentCount = entity.getNewsComment().size();
-        this.createdDate = DateTimeUtil.toString(entity.getCreatedDate(), Pattern.YYYYMMDD);
-        this.modifiedDate = DateTimeUtil.toString(entity.getModifiedDate(), Pattern.YYYYMMDD);
+        this.createdDate = entity.getCreatedDate();
+        this.modifiedDate = entity.getModifiedDate();
     }
 
 }

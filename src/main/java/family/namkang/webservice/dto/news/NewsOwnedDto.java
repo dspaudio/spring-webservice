@@ -1,8 +1,8 @@
 package family.namkang.webservice.dto.news;
 
 
-import family.namkang.webservice.common.util.DateTimeUtil;
-import family.namkang.webservice.common.util.DateTimeUtil.Pattern;
+import java.time.LocalDateTime;
+
 import family.namkang.webservice.domain.news.News;
 import family.namkang.webservice.dto.EnumCodeNameDto;
 import family.namkang.webservice.dto.user.UserOwnedDto;
@@ -16,8 +16,8 @@ public class NewsOwnedDto {
     private Boolean delFlag;
     private String title;
     private UserOwnedDto createdBy;
-    private String createdDate;
-    private String modifiedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     @Builder
     public NewsOwnedDto(News entity) {
@@ -26,8 +26,8 @@ public class NewsOwnedDto {
         this.delFlag = entity.getTempFlag();
         this.title = entity.getTitle();
         this.createdBy = new UserOwnedDto(entity.getCreatedBy());
-        this.createdDate = DateTimeUtil.toString(entity.getCreatedDate(), Pattern.YYYYMMDDHMS);
-        this.modifiedDate = DateTimeUtil.toString(entity.getModifiedDate(), Pattern.YYYYMMDDHMS);
+        this.createdDate = entity.getCreatedDate();
+        this.modifiedDate = entity.getModifiedDate();
     }
 
 }

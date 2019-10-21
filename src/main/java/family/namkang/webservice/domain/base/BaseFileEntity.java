@@ -1,6 +1,7 @@
 package family.namkang.webservice.domain.base;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
@@ -52,9 +53,12 @@ public abstract class BaseFileEntity extends BaseTimeEntity {
     protected BaseFileEntity(MultipartFile multipartFile) throws IOException {
     	this.id = UUID.randomUUID();
     	
-		Path path = Paths.get(getBasePathImpl(), DateTimeUtil.getCurrentyyyy(), DateTimeUtil.getCurrentMM(), DateTimeUtil.getCurrentdd(), this.id.toString());
-		
-		multipartFile.transferTo( path );
+		Path path = Paths.get(getBasePathImpl(), DateTimeUtil.getCurrentyyyy(), DateTimeUtil.getCurrentMM(), DateTimeUtil.getCurrentdd());
+		Files.createDirectories(path);
+
+		Path file = Paths.get(path.toString(), this.id.toString());
+
+		multipartFile.transferTo( file );
     	
         this.fileName = multipartFile.getOriginalFilename();
         this.fileUri = FileUtil.getFileUri(path);

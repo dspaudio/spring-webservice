@@ -28,7 +28,7 @@ public class PageRequestDto {
 	}
 	public void setElementsPerPage(int elementsPerPage) {
 		if ( elementsPerPage > this.maxElementsPerPage ) {
-    		this.pagesPerBlock = this.maxElementsPerPage;
+    		this.elementsPerPage = this.maxElementsPerPage;
     	} else if ( elementsPerPage > 0 ) {
     		this.elementsPerPage = elementsPerPage;
     	}

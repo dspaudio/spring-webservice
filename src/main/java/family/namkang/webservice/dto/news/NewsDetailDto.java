@@ -1,11 +1,10 @@
 package family.namkang.webservice.dto.news;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import family.namkang.webservice.common.util.DateTimeUtil;
-import family.namkang.webservice.common.util.DateTimeUtil.Pattern;
 import family.namkang.webservice.domain.news.News;
 import family.namkang.webservice.dto.EnumCodeNameDto;
 import family.namkang.webservice.dto.news.comment.NewsCommentListDto;
@@ -25,8 +24,8 @@ public class NewsDetailDto {
     private UserOwnedDto createdBy;
     private List<NewsFileOwnedDto> files;
     private List<NewsCommentListDto> comments;
-    private String createdDate;
-    private String modifiedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     @Builder
     public NewsDetailDto(News entity) {
@@ -39,8 +38,8 @@ public class NewsDetailDto {
         this.createdBy = new UserOwnedDto(entity.getCreatedBy());
         this.files = entity.getNewsFiles().stream().map(NewsFileOwnedDto::new).collect(Collectors.toList());
         this.comments = entity.getNewsComment().stream().map(NewsCommentListDto::new).collect(Collectors.toList());
-        this.createdDate = DateTimeUtil.toString(entity.getCreatedDate(), Pattern.YYYYMMDDHMS);
-        this.modifiedDate = DateTimeUtil.toString(entity.getModifiedDate(), Pattern.YYYYMMDDHMS);
+        this.createdDate = entity.getCreatedDate();
+        this.modifiedDate = entity.getModifiedDate();
     }
 
 }

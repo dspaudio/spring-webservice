@@ -1,7 +1,7 @@
 package family.namkang.webservice.dto.news.comment;
 
-import family.namkang.webservice.common.util.DateTimeUtil;
-import family.namkang.webservice.common.util.DateTimeUtil.Pattern;
+import java.time.LocalDateTime;
+
 import family.namkang.webservice.domain.news.comment.NewsComment;
 import family.namkang.webservice.dto.user.UserOwnedDto;
 import lombok.Builder;
@@ -18,8 +18,8 @@ public class NewsCommentListDto {
     private Long newsId;
     private String content;
     private UserOwnedDto createdBy; 
-    private String createdDate;
-    private String modifiedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     @Builder
     public NewsCommentListDto(NewsComment entity) {
@@ -27,8 +27,8 @@ public class NewsCommentListDto {
         this.newsId = entity.getNewsId();
         this.content = entity.getContent();
         this.createdBy = new UserOwnedDto(entity.getCreatedBy());
-        this.createdDate = DateTimeUtil.toString(entity.getCreatedDate(), Pattern.YYYYMMDDHMS);
-        this.modifiedDate = DateTimeUtil.toString(entity.getModifiedDate(), Pattern.YYYYMMDDHMS);
+        this.createdDate = entity.getCreatedDate();
+        this.modifiedDate = entity.getModifiedDate();
     }
     
 }

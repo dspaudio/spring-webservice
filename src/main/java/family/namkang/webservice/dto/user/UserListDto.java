@@ -1,7 +1,7 @@
 package family.namkang.webservice.dto.user;
 
-import family.namkang.webservice.common.util.DateTimeUtil;
-import family.namkang.webservice.common.util.DateTimeUtil.Pattern;
+import java.time.LocalDateTime;
+
 import family.namkang.webservice.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,15 +10,15 @@ import lombok.Getter;
 public class UserListDto {
     private Long id;
     private String userName;
-    private String createdDate;
-    private String modifiedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     @Builder
     public UserListDto(User entity) {
         this.id = entity.getId();
         this.userName = entity.getUserName();
-        this.createdDate = DateTimeUtil.toString(entity.getCreatedDate(), Pattern.YYYYMMDDHMS);
-        this.modifiedDate = DateTimeUtil.toString(entity.getModifiedDate(), Pattern.YYYYMMDDHMS);
+        this.createdDate = entity.getCreatedDate();
+        this.modifiedDate = entity.getModifiedDate();
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import family.namkang.webservice.common.exception.MessageException;
 import family.namkang.webservice.dto.PageRequestDto;
 import family.namkang.webservice.dto.PageResponseDto;
 import family.namkang.webservice.dto.news.NewsListDto;
@@ -25,14 +26,18 @@ public class NewsController {
 
     @GetMapping("/list")
     public void list(Model model, @RequestParam Map<String, String> params, PageRequestDto pageRequestDto) {
-    	pageRequestDto.setElementsPerPage(1);
-    	pageRequestDto.setPagesPerBlock(1);
+    	pageRequestDto.setElementsPerPage(10);
+    	pageRequestDto.setPagesPerBlock(5);
     	pageRequestDto.setSort(Sort.by(Direction.DESC, "createdDate"));
     	
     	Page<NewsListDto> newsPage = newsService.findAll(params, pageRequestDto.getPageRequestFromDto());
     	PageResponseDto<NewsListDto> newsPageResponseDto = new PageResponseDto<NewsListDto>(newsPage, pageRequestDto.getPagesPerBlock());
     	
     	model.addAttribute("newsPageResponseDto", newsPageResponseDto);
-    	
+    }
+    
+    @GetMapping("/detail")
+    public void detail(Model model, @RequestParam Long id) throws MessageException {
+    	model.addAttribute("newsDetailDto", newsService.findById(id));
     }
 }

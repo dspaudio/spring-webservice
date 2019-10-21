@@ -2,49 +2,55 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>NEWS LIST</title>
+    <title>NEWS DETAIL</title>
     <style type="text/css">
         div#content {width:700px}
-        #content table.list_table {border-collapse: collapse; width: 100%;}
-        #content table.list_table td,th {border: solid 1px; padding: 3px 5px;}
+        #content table.detail_table {border-collapse: collapse; width: 100%;}
+        #content table.detail_table th,td {border: solid 1px; padding: 3px 5px;}
+        table.detail_table ul.file_list {padding:0; margin:0; list-style:none;}
     </style>
 </head>
 <body>
-    <h1>NEWS LIST</h1>
+    <h1>NEWS DETAIL</h1>
     <div id="content">
     
-        <table class="list_table">
+        <table class="detail_table">
             <colgroup>
-                <col width="60px" />
-                <col width="*" />
-                <col width="80px" />
-                <col width="60px" />
-                <col width="60px" />
                 <col width="150px" />
+                <col width="*" />
             </colgroup>
             <tr>
                 <th>분류</th>
-                <th>제목</th>
-                <th>글쓴이 이름</th>
-                <th>첨부</th>
-                <th>코멘트</th>
-                <th>작성일시</th>
+                <td th:text="${newsDetailDto.category.name}">카테고리 이름</td>
             </tr>
-            <tr th:each="news : ${newsPageResponseDto.elementsList}">
-                <td th:text="${news.category.name}">카테고리 이름</td>
-                <td th:text="${news.title}">제목</td>
-                <td th:text="${news.createdBy.userName}">글쓴이 이름</td>
-                <td th:text="${news.filesCount}">첨부파일 수</td>
-                <td th:text="${news.commentCount}">코멘트 수</td>
-                <td th:text="${#temporals.format(news.createdDate,'yyyy-MM-dd HH:mm')}">작성일시</td>
+            <tr>
+                <th>제목</th>
+                <td th:text="${newsDetailDto.title}">제목</td>
+            </tr>
+            <tr>
+                <th>글쓴이 이름</th>
+                <td th:text="${newsDetailDto.createdBy.userName}">글쓴이 이름</td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td th:text="${newsDetailDto.content}">내용</td>
+            </tr>
+            <tr>
+                <th>첨부파일</th>
+                <td>
+                    <ul class="file_list">
+                        <li th:each="file : ${newsDetailDto.files}" th:text="${file.fileName}">파일명</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>작성일시</th>
+                <td th:text="${#temporals.format(newsDetailDto.createdDate,'yyyy-MM-dd HH:mm')}">작성일시</td>
             </tr>
         </table>
-        
-        <div th:insert="~{include/pagenation :: pagenavi}" th:with="pagenate=${newsPageResponseDto}"></div>
-    
     </div>
     
-    <form id="newsListForm">
+    <form id="newsDetailForm">
         <input type="hidden" name="title" th:if="${not #strings.isEmpty(param.title)}" th:value="${param.title}">
         <input type="hidden" name="content" th:if="${not #strings.isEmpty(param.content)}" th:value="${param.content}">
         <input type="hidden" name="titlecontent" th:if="${not #strings.isEmpty(param.titlecontent)}" th:value="${param.titlecontent}">
@@ -54,14 +60,12 @@
         <input type="hidden" name="createdById" th:if="${not #strings.isEmpty(param.createdById)}" th:value="${param.createdById}">
         <input type="hidden" name="category" th:if="${not #strings.isEmpty(param.category)}" th:value="${param.category}">
         <input type="hidden" name="requestPage" th:if="${not #strings.isEmpty(param.requestPage)}" th:value="${param.requestPage}">
+        <input type="hidden" name="id" th:value="${newsDetailDto.id}">
     </form>
     <script type="text/javascript">
-        function detail(newsId){
-            var input = $("<input>").attr("type", "hidden").attr("name", "id").val(newsId);
-            $('#newsListForm').append($(input));
+        function list(){
             $('#newsListForm').attr("action". "");
         }
     </script>
 </body>
 </html>
-
