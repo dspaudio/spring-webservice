@@ -2,17 +2,18 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>NEWS DETAIL</title>
     <style type="text/css">
-        div#content {width:700px}
+        #content {width:700px}
         #content table.detail_table {border-collapse: collapse; width: 100%;}
         #content table.detail_table th,td {border: solid 1px; padding: 3px 5px;}
         table.detail_table ul.file_list {padding:0; margin:0; list-style:none;}
     </style>
 </head>
 <body>
-    <h1>NEWS DETAIL</h1>
-    <div id="content">
+    <section id="content" layout:fragment="content">
+        <h1>NEWS DETAIL</h1>
     
         <table class="detail_table">
             <colgroup>
@@ -48,7 +49,10 @@
                 <td th:text="${#temporals.format(newsDetailDto.createdDate,'yyyy-MM-dd HH:mm')}">작성일시</td>
             </tr>
         </table>
-    </div>
+        
+        <a href="javascript:void(0);" onclick="list();return false;">목록</a>
+        
+    </section>
     
     <form id="newsDetailForm">
         <input type="hidden" name="title" th:if="${not #strings.isEmpty(param.title)}" th:value="${param.title}">
@@ -64,7 +68,9 @@
     </form>
     <script type="text/javascript">
         function list(){
-            $('#newsListForm').attr("action". "");
+            $('#newsDetailForm').attr("method", "get");
+            $('#newsDetailForm').attr("action", "/news/list");
+            $('#newsDetailForm').submit();
         }
     </script>
 </body>

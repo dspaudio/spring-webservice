@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="/layout/layout_default">
 <head>
     <meta charset="UTF-8">
     <title>NEWS LIST</title>
     <style type="text/css">
-        div#content {width:700px}
+        #content {width:700px}
         #content table.list_table {border-collapse: collapse; width: 100%;}
         #content table.list_table td,th {border: solid 1px; padding: 3px 5px;}
     </style>
 </head>
 <body>
-    <h1>NEWS LIST</h1>
-    <div id="content">
+    <section id="content" layout:fragment="content">
+        <h1>NEWS LIST</h1>
     
         <table class="list_table">
             <colgroup>
@@ -32,7 +32,7 @@
             </tr>
             <tr th:each="news : ${newsPageResponseDto.elementsList}">
                 <td th:text="${news.category.name}">카테고리 이름</td>
-                <td th:text="${news.title}">제목</td>
+                <td><a href="javascript:void(0);" th:attr="onclick=|detail('${news.id}');return false;|" th:text="${news.title}">제목</a></td>
                 <td th:text="${news.createdBy.userName}">글쓴이 이름</td>
                 <td th:text="${news.filesCount}">첨부파일 수</td>
                 <td th:text="${news.commentCount}">코멘트 수</td>
@@ -42,7 +42,7 @@
         
         <div th:insert="~{include/pagenation :: pagenavi}" th:with="pagenate=${newsPageResponseDto}"></div>
     
-    </div>
+    </section>
     
     <form id="newsListForm">
         <input type="hidden" name="title" th:if="${not #strings.isEmpty(param.title)}" th:value="${param.title}">
@@ -59,9 +59,17 @@
         function detail(newsId){
             var input = $("<input>").attr("type", "hidden").attr("name", "id").val(newsId);
             $('#newsListForm').append($(input));
-            $('#newsListForm').attr("action". "");
+            $('#newsListForm').attr("action", "/news/detail");
+            $('#newsListForm').submit();
+        }
+        function list(page){
+            $('#newsListForm input[name=requestPage]').val(page);
+            $('#newsListForm').attr("method", "get");
+            $('#newsListForm').attr("action", "/news/list");
+            $('#newsListForm').submit();
         }
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </body>
 </html>
 

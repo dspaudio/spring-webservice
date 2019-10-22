@@ -10,23 +10,23 @@
 	    </style>
         <ul class="link_list">
             <li>
-                <a aria-label="First" href="/news/list?requestPage=1">&laquo;</a>
+                <a href="javascript:void(0);" th:attr="onclick=|list('1');return false;|">&laquo;</a>
             </li>
             
             <li th:with="prev=${pagenate.currentPage-pagenate.pagesPerBlock < 1 ? 1 : pagenate.currentPage-pagenate.pagesPerBlock}">
-                <a th:href="@{/news/list(requestPage=${prev})}">&lsaquo;</a>
+                <a href="javascript:void(0);" th:attr="onclick=|list('${prev}');return false;|">&lsaquo;</a>
             </li>
     
             <li th:each="page :${#numbers.sequence(pagenate.blockStart, pagenate.blockEnd)}" th:style="${page == pagenate.currentPage} ? 'font-weight:bold'">
-                <a th:href="@{/news/list(requestPage=${page})}" th:text="${page}">1</a>
+                <a href="javascript:void(0);" th:attr="onclick=|list('${page}');return false;|" th:text="${page}">1</a>
             </li>
     
             <li th:with="next=${pagenate.currentPage+pagenate.pagesPerBlock > pagenate.totalPages ? pagenate.totalPages : pagenate.currentPage+pagenate.pagesPerBlock}">
-                <a th:href="@{/news/list(requestPage=${next})}">&rsaquo;</a>
+                <a href="javascript:void(0);" th:attr="onclick=|list('${next}');return false;|">&rsaquo;</a>
             </li>
             
             <li>
-                <a aria-label="Last" th:href="@{/news/list(requestPage=${pagenate.totalPages})}">&raquo;</a>
+                <a href="javascript:void(0);" th:attr="onclick=|list(${pagenate.totalPages});return false;|">&raquo;</a>
             </li>
         </ul>
     </div>
