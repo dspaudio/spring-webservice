@@ -1,27 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="/layout/layout_default">
 <head>
-    <meta charset="UTF-8">
+    <th:block layout:fragment="add_meta">
+    </th:block>
+    
     <title>NEWS LIST</title>
-    <style type="text/css">
-        #content {width:700px}
-        #content table.list_table {border-collapse: collapse; width: 100%;}
-        #content table.list_table td,th {border: solid 1px; padding: 3px 5px;}
-    </style>
+    
+    <th:block layout:fragment="add_css">
+	    <style type="text/css">
+	        
+	    </style>
+    </th:block>
 </head>
 <body>
     <section id="content" layout:fragment="content">
         <h1>NEWS LIST</h1>
     
-        <table class="list_table">
-            <colgroup>
-                <col width="60px" />
-                <col width="*" />
-                <col width="80px" />
-                <col width="60px" />
-                <col width="60px" />
-                <col width="150px" />
-            </colgroup>
+        <table class="table table-bordered">
             <tr>
                 <th>분류</th>
                 <th>제목</th>
@@ -40,36 +35,50 @@
             </tr>
         </table>
         
-        <div th:insert="~{include/pagenation :: pagenavi}" th:with="pagenate=${newsPageResponseDto}"></div>
+        <div th:insert="~{include/pagenation :: pagenavi}" th:with="pagenate=${newsPageResponseDto},listMethodName=list"></div>
+        
+        <div id="buttons"  style="display: grid;">
+            <div style="grid-column: 1;">
+            </div>
+            <div style="grid-column: 2;text-align: right;">
+                <button class="btn btn-primary" type="submit" form="newsListForm" formmethod="get" formaction="/news/createForm">등록</button>
+            </div>
+        </div>
     
+	    <form id="newsListForm">
+	        <input type="hidden" name="title" th:if="${not #strings.isEmpty(param.title)}" th:value="${param.title}">
+	        <input type="hidden" name="content" th:if="${not #strings.isEmpty(param.content)}" th:value="${param.content}">
+	        <input type="hidden" name="titlecontent" th:if="${not #strings.isEmpty(param.titlecontent)}" th:value="${param.titlecontent}">
+	        <input type="hidden" name="createdAfter" th:if="${not #strings.isEmpty(param.createdAfter)}" th:value="${param.createdAfter}">
+	        <input type="hidden" name="createdBefore" th:if="${not #strings.isEmpty(param.createdBefore)}" th:value="${param.createdBefore}">
+	        <input type="hidden" name="userName" th:if="${not #strings.isEmpty(param.userName)}" th:value="${param.userName}">
+	        <input type="hidden" name="createdById" th:if="${not #strings.isEmpty(param.createdById)}" th:value="${param.createdById}">
+	        <input type="hidden" name="category" th:if="${not #strings.isEmpty(param.category)}" th:value="${param.category}">
+	        <input type="hidden" name="requestPage" th:if="${not #strings.isEmpty(param.requestPage)}" th:value="${param.requestPage}">
+	    </form>
     </section>
     
-    <form id="newsListForm">
-        <input type="hidden" name="title" th:if="${not #strings.isEmpty(param.title)}" th:value="${param.title}">
-        <input type="hidden" name="content" th:if="${not #strings.isEmpty(param.content)}" th:value="${param.content}">
-        <input type="hidden" name="titlecontent" th:if="${not #strings.isEmpty(param.titlecontent)}" th:value="${param.titlecontent}">
-        <input type="hidden" name="createdAfter" th:if="${not #strings.isEmpty(param.createdAfter)}" th:value="${param.createdAfter}">
-        <input type="hidden" name="createdBefore" th:if="${not #strings.isEmpty(param.createdBefore)}" th:value="${param.createdBefore}">
-        <input type="hidden" name="userName" th:if="${not #strings.isEmpty(param.userName)}" th:value="${param.userName}">
-        <input type="hidden" name="createdById" th:if="${not #strings.isEmpty(param.createdById)}" th:value="${param.createdById}">
-        <input type="hidden" name="category" th:if="${not #strings.isEmpty(param.category)}" th:value="${param.category}">
-        <input type="hidden" name="requestPage" th:if="${not #strings.isEmpty(param.requestPage)}" th:value="${param.requestPage}">
-    </form>
-    <script type="text/javascript">
-        function detail(newsId){
-            var input = $("<input>").attr("type", "hidden").attr("name", "id").val(newsId);
-            $('#newsListForm').append($(input));
-            $('#newsListForm').attr("action", "/news/detail");
-            $('#newsListForm').submit();
-        }
-        function list(page){
-            $('#newsListForm input[name=requestPage]').val(page);
-            $('#newsListForm').attr("method", "get");
-            $('#newsListForm').attr("action", "/news/list");
-            $('#newsListForm').submit();
-        }
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <th:block layout:fragment="add_js">
+	    <script type="text/javascript">
+	        function detail(newsId){
+	            var input = $("<input>").attr("type", "hidden").attr("name", "id").val(newsId);
+	            $('#newsListForm').append($(input));
+	            $('#newsListForm').attr("action", "/news/detail");
+	            $('#newsListForm').submit();
+	        }
+	        function list(page){
+	        	if ( $('#newsListForm input[name=requestPage]').length > 0 ) {
+	        		$('#newsListForm input[name=requestPage]').val(page);
+	        	} else {
+	        		var input = $("<input>").attr("type", "hidden").attr("name", "requestPage").val(page);
+	                $('#newsListForm').append($(input));
+	        	}
+	            $('#newsListForm').attr("method", "get");
+	            $('#newsListForm').attr("action", "/news/list");
+	            $('#newsListForm').submit();
+	        }
+	    </script>
+    </th:block>
 </body>
 </html>
 

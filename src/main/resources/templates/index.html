@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="/layout/layout_default">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <!-- 추가 meta tag -->
+    <th:block layout:fragment="add_meta"></th:block>
+
+    <title>index</title>
+
+    <!-- 추가 css -->
+    <th:block layout:fragment="add_css">
+        <style>
+        </style>
+    </th:block>
+
 </head>
-<body>
-    Insert body here
+
+<body class="d-flex flex-column h-100">
+
+     <section layout:fragment="content">
+        <p style="text-align: center;">기본 인덱스 페이지 = home</p>
+     </section>
+
+    <th:block layout:fragment="add_js">
+        <script type="text/javascript">
+        </script>
+    </th:block>
 </body>
+
 </html>

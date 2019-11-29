@@ -3,33 +3,34 @@
 <head>
 </head>
 <body>
-    <div class="pagenate" th:fragment="pagenavi">
-	    <style>
-            .pagenate ul.link_list { list-style:none; display:table; margin:auto; padding:0;}
-            .pagenate ul.link_list li { margin:0 5px; float:left; }
-	    </style>
-        <ul class="link_list">
-            <li>
-                <a href="javascript:void(0);" th:attr="onclick=|list('1');return false;|">&laquo;</a>
+    <nav id="pagenation" th:fragment="pagenavi">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0);" th:attr="onclick=|${listMethodName}(1);return false;|">
+                    <span>&laquo;</span>
+                </a>
+            </li>
+            <li th:with="prev=${pagenate.currentPage - pagenate.pagesPerBlock < 1 ? 1 : pagenate.currentPage - pagenate.pagesPerBlock}">
+                <a class="page-link" href="javascript:void(0);" th:attr="onclick=|${listMethodName}(${prev});return false;|">
+                    <span>&lsaquo;</span>
+                </a>
             </li>
             
-            <li th:with="prev=${pagenate.currentPage-pagenate.pagesPerBlock < 1 ? 1 : pagenate.currentPage-pagenate.pagesPerBlock}">
-                <a href="javascript:void(0);" th:attr="onclick=|list('${prev}');return false;|">&lsaquo;</a>
-            </li>
-    
-            <li th:each="page :${#numbers.sequence(pagenate.blockStart, pagenate.blockEnd)}" th:style="${page == pagenate.currentPage} ? 'font-weight:bold'">
-                <a href="javascript:void(0);" th:attr="onclick=|list('${page}');return false;|" th:text="${page}">1</a>
-            </li>
-    
-            <li th:with="next=${pagenate.currentPage+pagenate.pagesPerBlock > pagenate.totalPages ? pagenate.totalPages : pagenate.currentPage+pagenate.pagesPerBlock}">
-                <a href="javascript:void(0);" th:attr="onclick=|list('${next}');return false;|">&rsaquo;</a>
+            <li class="page-item" th:each="page :${#numbers.sequence(pagenate.blockStart, pagenate.blockEnd)}" th:style="${page == pagenate.currentPage} ? 'font-weight:bold'">
+                <a class="page-link" href="javascript:void(0);" th:attr="onclick=|${listMethodName}(${page});return false;|" th:text="${page}">1</a>
             </li>
             
-            <li>
-                <a href="javascript:void(0);" th:attr="onclick=|list(${pagenate.totalPages});return false;|">&raquo;</a>
+            <li class="page-item" th:with="next=${pagenate.currentPage+pagenate.pagesPerBlock > pagenate.totalPages ? pagenate.totalPages : pagenate.currentPage+pagenate.pagesPerBlock}">
+                <a class="page-link" href="javascript:void(0);" th:attr="onclick=|${listMethodName}(${next});return false;|">
+                    <span>&rsaquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0);" th:attr="onclick=|${listMethodName}(${pagenate.totalPages});return false;|">
+                    <span>&raquo;</span>
+                </a>
             </li>
         </ul>
-    </div>
-
+    </nav>
 </body>
 </html>

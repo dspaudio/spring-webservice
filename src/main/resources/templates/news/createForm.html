@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="/layout/layout_default">
+<head>
+    <th:block layout:fragment="add_meta">
+    </th:block>
+    
+    <title>NEWS CREATE</title>
+    
+    <th:block layout:fragment="add_css">
+    </th:block>
+</head>
+<body>
+    <section id="content" layout:fragment="content">
+        <h1>NEWS CREATE</h1>
+        
+        <form id="newsCreateForm" th:action="@{/news/create}" th:object="${newsSaveDto}" >
+            <input type="hidden" name="title" th:if="${not #strings.isEmpty(param.title)}" th:value="${param.title}">
+            <input type="hidden" name="content" th:if="${not #strings.isEmpty(param.content)}" th:value="${param.content}">
+            <input type="hidden" name="titlecontent" th:if="${not #strings.isEmpty(param.titlecontent)}" th:value="${param.titlecontent}">
+            <input type="hidden" name="createdAfter" th:if="${not #strings.isEmpty(param.createdAfter)}" th:value="${param.createdAfter}">
+            <input type="hidden" name="createdBefore" th:if="${not #strings.isEmpty(param.createdBefore)}" th:value="${param.createdBefore}">
+            <input type="hidden" name="userName" th:if="${not #strings.isEmpty(param.userName)}" th:value="${param.userName}">
+            <input type="hidden" name="createdById" th:if="${not #strings.isEmpty(param.createdById)}" th:value="${param.createdById}">
+            <input type="hidden" name="category" th:if="${not #strings.isEmpty(param.category)}" th:value="${param.category}">
+            <input type="hidden" name="requestPage" th:if="${not #strings.isEmpty(param.requestPage)}" th:value="${param.requestPage}">
+            <table class="table table-bordered">
+                <tr>
+                    <th>분류</th>
+                    <td>
+                        <input type="text" th:field="*{category}"></input>
+                        <select th:each="newsCategory :${newsCategories}">
+                            <option th:value="${newsCategory.code}" th:txt="${newsCategory.name}">Name</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>제목</th>
+                    <td>${newsDetailDto.title}</td>
+                </tr>
+                <tr>
+                    <th>글쓴이 이름</th>
+                    <td>${newsDetailDto.createdBy.userName}</td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td>${newsDetailDto.content}</td>
+                </tr>
+
+                <tr>
+                    <th>작성일시</th>
+                    <td>${#temporals.format(newsDetailDto.createdDate,'yyyy-MM-dd HH:mm')}</td>
+                </tr>
+            </table>
+        
+            <div id="buttons"  style="display: grid;">
+                <div style="grid-column: 1;">
+                </div>
+                <div style="grid-column: 2;text-align: right;">
+                    <button class="btn btn-primary" type="submit" form="newsCreateForm" formmethod="post" formaction="/news/list">목록</button>
+                </div>
+            </div>
+        </form>
+        
+    </section>
+    
+    <th:block layout:fragment="add_js">
+        <script type="text/javascript">
+        </script>
+    </th:block>
+</body>
+</html>

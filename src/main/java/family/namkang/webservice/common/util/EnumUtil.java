@@ -18,6 +18,10 @@ public class EnumUtil {
 		return ENUM_LIST_MAP;
 	}
 	
+	public static List<EnumCodeNameDto> getEnumList(String key) {
+		return ENUM_LIST_MAP.get(key);
+	}
+	
 	private static Map<String, List<EnumCodeNameDto>> initEnumList() {
 		Map<String, List<EnumCodeNameDto>> map = new HashMap<String, List<EnumCodeNameDto>>();
 		
