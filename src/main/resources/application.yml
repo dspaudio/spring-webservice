@@ -5,6 +5,21 @@ spring:
   jpa:
     hibernate:
       use-new-id-generator-mappings: false # Hibernate의 id 생성 전략을 따라갈지 결정하는 useNewIdGeneratorMappings 설정. 2.0부터는 true가 기본값. -> auto increment가 잘 안먹히게됨  *참조 : https://jojoldu.tistory.com/295
+
+# 카카오 앱소유계정 kidless@hanmail.net 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: <your client id>
+            client-secret: <your client secret>
+          facebook:
+            client-id: <your client id>
+            client-secret: <your client secret>
+          kakao:
+            client-id: 02f1f488891d0fe1eaf05652f01497c9
+            client-secret: mcI2xtNvnrzCewKuTjNSd9f8gTbg4bbh
       
   # DATA WEB (SpringDataWebProperties)
   data:
@@ -15,3 +30,4 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 15MB
+

@@ -1,4 +1,4 @@
-package family.namkang.webservice.web;
+package family.namkang.webservice.controller;
 
 import java.util.Map;
 

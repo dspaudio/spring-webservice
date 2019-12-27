@@ -14,8 +14,8 @@ import lombok.Getter;
 public class NewsListDto {
     private Long id;
     private EnumCodeNameDto category;
-    private Boolean noticeFlag;
-    private Boolean delFlag;
+    private boolean noticeFlag;
+    private boolean delFlag;
     private String title;
     private UserOwnedDto createdBy;
     private Integer filesCount;
@@ -27,8 +27,8 @@ public class NewsListDto {
     public NewsListDto(News entity) {
         this.id = entity.getId();
         this.category = new EnumCodeNameDto( entity.getCategory() );
-        this.noticeFlag = entity.getNoticeFlag();
-        this.delFlag = entity.getTempFlag();
+        this.noticeFlag = entity.isNoticeFlag();
+        this.delFlag = entity.isTempFlag();
         this.title = entity.getTitle();
         this.createdBy = new UserOwnedDto(entity.getCreatedBy());
         this.filesCount = entity.getNewsFiles().size();

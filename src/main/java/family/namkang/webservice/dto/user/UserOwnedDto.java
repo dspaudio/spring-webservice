@@ -7,12 +7,12 @@ import lombok.Getter;
 @Getter
 public class UserOwnedDto {
     private Long id;
-    private String userName;
+    private String username;
 
     @Builder
     public UserOwnedDto(User entity) {
         this.id = entity.getId();
-        this.userName = entity.getUserName();
+        this.username = entity.getUsername();
     }
 
 }

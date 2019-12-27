@@ -34,7 +34,7 @@ public class UserRepositoryTest {
     public void User저장_불러오기() {
         //given
         this.user = userRepository.save(User.builder()
-                .userName("유저일")
+                .username("유저일")
                 .build());
 
         //when
@@ -42,7 +42,7 @@ public class UserRepositoryTest {
 
         //then
         User User = userList.get(0);
-        assertThat(User.getUserName(), is("유저일"));
+        assertThat(User.getUsername(), is("유저일"));
     }
 
 }

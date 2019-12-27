@@ -26,7 +26,7 @@ public class NewsSpecs {
             public Predicate toPredicate(Root<News> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
             	
                 Join<News, User> userJoin = root.join("createdBy");
-                return cb.like(userJoin.<String> get("userName"), "%" + param + "%");
+                return cb.like(userJoin.<String> get("username"), "%" + param + "%");
                 
             }
         };
@@ -61,9 +61,9 @@ public class NewsSpecs {
 						case "createdBefore": //기간검색에서 endDt랑 비교
 							predicates.add(cb.lessThan( root.<LocalDateTime>get("createdDate"), DateTimeUtil.fromString(strValue, DateTimeUtil.Pattern.YYYYMMDD).plusDays(1) ));
 							break;
-						case "userName":
+						case "username":
 			                Join<News, User> userJoin = root.join("createdBy");
-			                predicates.add( cb.like(userJoin.<String>get("userName"), "%" + strValue + "%") );
+			                predicates.add( cb.like(userJoin.<String>get("username"), "%" + strValue + "%") );
 							break;
 							
 						case "createdById":

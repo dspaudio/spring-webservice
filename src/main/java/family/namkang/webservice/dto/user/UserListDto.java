@@ -9,14 +9,14 @@ import lombok.Getter;
 @Getter
 public class UserListDto {
     private Long id;
-    private String userName;
+    private String username;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
     @Builder
     public UserListDto(User entity) {
         this.id = entity.getId();
-        this.userName = entity.getUserName();
+        this.username = entity.getUsername();
         this.createdDate = entity.getCreatedDate();
         this.modifiedDate = entity.getModifiedDate();
     }

@@ -13,7 +13,7 @@ import lombok.Getter;
 public class NewsOwnedDto {
     private Long id;
     private EnumCodeNameDto category;
-    private Boolean delFlag;
+    private boolean delFlag;
     private String title;
     private UserOwnedDto createdBy;
     private LocalDateTime createdDate;
@@ -23,7 +23,7 @@ public class NewsOwnedDto {
     public NewsOwnedDto(News entity) {
         this.id = entity.getId();
         this.category = new EnumCodeNameDto( entity.getCategory() );
-        this.delFlag = entity.getTempFlag();
+        this.delFlag = entity.isTempFlag();
         this.title = entity.getTitle();
         this.createdBy = new UserOwnedDto(entity.getCreatedBy());
         this.createdDate = entity.getCreatedDate();

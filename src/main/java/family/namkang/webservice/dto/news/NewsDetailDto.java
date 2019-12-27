@@ -17,8 +17,8 @@ import lombok.Getter;
 public class NewsDetailDto {
     private Long id;
     private EnumCodeNameDto category;
-    private Boolean noticeFlag;
-    private Boolean delFlag;
+    private boolean noticeFlag;
+    private boolean delFlag;
     private String title;
     private String content;
     private UserOwnedDto createdBy;
@@ -31,8 +31,8 @@ public class NewsDetailDto {
     public NewsDetailDto(News entity) {
         this.id = entity.getId();
         this.category = new EnumCodeNameDto(entity.getCategory());
-        this.noticeFlag = entity.getNoticeFlag();
-        this.delFlag = entity.getTempFlag();
+        this.noticeFlag = entity.isNoticeFlag();
+        this.delFlag = entity.isTempFlag();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.createdBy = new UserOwnedDto(entity.getCreatedBy());

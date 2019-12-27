@@ -17,8 +17,8 @@ import lombok.Setter;
 public class NewsSaveDto {
     private Long id;
     private News.Category category;
-    private Boolean noticeFlag;
-    private Boolean delFlag;
+    private boolean noticeFlag;
+    private boolean delFlag;
     private String title;
     private String content;
     private Long createdById;
@@ -26,7 +26,7 @@ public class NewsSaveDto {
     private List<String> deleteFileIds;
 
     @Builder
-    public NewsSaveDto(Long id, News.Category category, Boolean noticeFlag, Boolean delFlag, String title, String content, Long createdById, MultipartFile[] files, List<String> deleteFileIds) {
+    public NewsSaveDto(Long id, News.Category category, boolean noticeFlag, boolean delFlag, String title, String content, Long createdById, MultipartFile[] files, List<String> deleteFileIds) {
         this.id = id;
         this.category = category;
         this.noticeFlag = noticeFlag;

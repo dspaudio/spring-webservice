@@ -28,7 +28,7 @@
             <tr th:each="news : ${newsPageResponseDto.elementsList}">
                 <td th:text="${news.category.name}">카테고리 이름</td>
                 <td><a href="javascript:void(0);" th:attr="onclick=|detail('${news.id}');return false;|" th:text="${news.title}">제목</a></td>
-                <td th:text="${news.createdBy.userName}">글쓴이 이름</td>
+                <td th:text="${news.createdBy.username}">글쓴이 이름</td>
                 <td th:text="${news.filesCount}">첨부파일 수</td>
                 <td th:text="${news.commentCount}">코멘트 수</td>
                 <td th:text="${#temporals.format(news.createdDate,'yyyy-MM-dd HH:mm')}">작성일시</td>
@@ -51,7 +51,7 @@
 	        <input type="hidden" name="titlecontent" th:if="${not #strings.isEmpty(param.titlecontent)}" th:value="${param.titlecontent}">
 	        <input type="hidden" name="createdAfter" th:if="${not #strings.isEmpty(param.createdAfter)}" th:value="${param.createdAfter}">
 	        <input type="hidden" name="createdBefore" th:if="${not #strings.isEmpty(param.createdBefore)}" th:value="${param.createdBefore}">
-	        <input type="hidden" name="userName" th:if="${not #strings.isEmpty(param.userName)}" th:value="${param.userName}">
+	        <input type="hidden" name="username" th:if="${not #strings.isEmpty(param.username)}" th:value="${param.username}">
 	        <input type="hidden" name="createdById" th:if="${not #strings.isEmpty(param.createdById)}" th:value="${param.createdById}">
 	        <input type="hidden" name="category" th:if="${not #strings.isEmpty(param.category)}" th:value="${param.category}">
 	        <input type="hidden" name="requestPage" th:if="${not #strings.isEmpty(param.requestPage)}" th:value="${param.requestPage}">

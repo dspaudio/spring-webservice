@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.DynamicInsert;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.multipart.MultipartFile;
 
 import family.namkang.webservice.common.EnumCodeName;
@@ -47,27 +45,25 @@ public class News extends BasePostEntity {
     private Category category;
 
     @Column(nullable=false, columnDefinition="Boolean default false")
-    private Boolean noticeFlag;
+    private boolean noticeFlag;
 
     @Column(nullable=false, columnDefinition="Boolean default false")
-    private Boolean tempFlag;
+    private boolean tempFlag;
 
-    @OneToMany(mappedBy="newsId", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy="newsId", cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy("createdDate asc")
-    @Basic(fetch = FetchType.LAZY)
     private List<NewsFile> newsFiles;
 
-    @OneToMany(mappedBy="newsId", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy="newsId", cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy("createdDate desc")
-    @Basic(fetch = FetchType.LAZY)
     private List<NewsComment> newsComment;
     
     
     @Builder
-    public News(Category category, Boolean noticeFlag, Boolean delFlag, String title, String content, Long createdById, MultipartFile[] files) throws IOException {
+    public News(Category category, boolean noticeFlag, boolean delFlag, String title, String content, Long createdById, MultipartFile[] files) throws IOException {
     	this.category = category;
-        this.noticeFlag = noticeFlag == null ? false:noticeFlag;
-        this.tempFlag = delFlag == null ? false:delFlag;
+        this.noticeFlag = noticeFlag;
+        this.tempFlag = delFlag;
         this.title = title;
         this.content = content;
         this.createdById = createdById;
@@ -107,8 +103,8 @@ public class News extends BasePostEntity {
     
     public void update(NewsSaveDto dto) throws IOException {
         Optional.ofNullable(dto.getCategory()).ifPresent(c->{this.category = c;});
-        Optional.ofNullable(dto.getNoticeFlag()).ifPresent(n->{this.noticeFlag = n;});
-        Optional.ofNullable(dto.getDelFlag()).ifPresent(d->{this.tempFlag = d;});
+        Optional.ofNullable(dto.isNoticeFlag()).ifPresent(n->{this.noticeFlag = n;});
+        Optional.ofNullable(dto.isDelFlag()).ifPresent(d->{this.tempFlag = d;});
         Optional.ofNullable(dto.getTitle()).ifPresent(t->{this.title = t;});
         Optional.ofNullable(dto.getContent()).ifPresent(c->{this.content = c;});
         
