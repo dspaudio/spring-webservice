@@ -18,8 +18,8 @@ spring:
             client-id: <your client id>
             client-secret: <your client secret>
           kakao:
-            client-id: 02f1f488891d0fe1eaf05652f01497c9
-            client-secret: mcI2xtNvnrzCewKuTjNSd9f8gTbg4bbh
+            client-id: <your client id>
+            client-secret: <your client secret>
       
   # DATA WEB (SpringDataWebProperties)
   data:
